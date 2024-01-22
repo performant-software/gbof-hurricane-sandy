@@ -32,6 +32,7 @@ export default defineConfig({
         name: "post",
         label: "Posts",
         path: "content/posts",
+        format: "mdx",
         fields: [
           {
             type: "string",
@@ -45,8 +46,73 @@ export default defineConfig({
             name: "body",
             label: "Body",
             isBody: true,
+            templates: [
+              {
+                name: "place",
+                label: "Place",
+                fields: [
+                  {
+                    name: "name",
+                    label: "Label",
+                    type: "string",
+                    required: true,
+                    isTitle: true,
+                  },
+                  {
+                    name: "place",
+                    label: "Place Data",
+                    type: "reference",
+                    collections: [ 'place' ],
+                  },
+                ]
+              },
+              {
+                name: "person",
+                label: "Person",
+                fields: [
+                  {
+                    name: "firstName",
+                    label: "First Name",
+                    type: "string",
+                  },
+                  {
+                    name: "lastName",
+                    label: "Last Name",
+                    type: "string",
+                    required: true,
+                    isTitle: true,
+                  }
+                ]
+              }
+            ]
           },
         ],
+      },
+      {
+        name: "place",
+        label: "Places",
+        path: "content/places",
+        fields: [
+          {
+            name: "name",
+            label: "Place Name",
+            type: "string",
+            required: true,
+            isTitle: true,
+          },
+          {
+            name: "core_data_id",
+            label: "Core Data Place ID",
+            type: "string",
+            required: true,
+          },
+          {
+            name: "description",
+            label: "Description",
+            type: "rich-text",
+            isBody: true,
+          }
+        ]
       },
     ],
   },
