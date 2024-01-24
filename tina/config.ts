@@ -1,4 +1,5 @@
 import { defineConfig } from "tinacms";
+import TinaPlacePicker from "../src/components/TinePlacePicker";
 
 // Your hosting provider likely exposes this as an environment variable
 const branch =
@@ -42,6 +43,11 @@ export default defineConfig({
             required: true,
           },
           {
+            name: "cardImage",
+            label: "Card Image",
+            type: "image"
+          },
+          {
             type: "rich-text",
             name: "body",
             label: "Body",
@@ -52,8 +58,8 @@ export default defineConfig({
                 label: "Place",
                 fields: [
                   {
-                    name: "name",
-                    label: "Label",
+                    name: "title",
+                    label: "Title",
                     type: "string",
                     required: true,
                     isTitle: true,
@@ -61,29 +67,36 @@ export default defineConfig({
                   {
                     name: "place",
                     label: "Place Data",
-                    type: "reference",
-                    collections: [ 'place' ],
-                  },
-                ]
-              },
-              {
-                name: "person",
-                label: "Person",
-                fields: [
-                  {
-                    name: "firstName",
-                    label: "First Name",
-                    type: "string",
-                  },
-                  {
-                    name: "lastName",
-                    label: "Last Name",
-                    type: "string",
+                    type: "object",
+                    fields: [
+                      {
+                        name: "title",
+                        label: "Title",
+                        type: "string",
+                        required: true,
+                        isTitle: true
+                      },
+                      {
+                        name: "uuid",
+                        label: "UUID",
+                        type: "string",
+                      }
+                    ],
+                    ui: {
+                      component: TinaPlacePicker,
+                    },
                     required: true,
-                    isTitle: true,
+                  },
+                  {
+                    name: "caption",
+                    label: "Caption",
+                    type: "string",
+                    ui: {
+                      component: "textarea"
+                    }
                   }
-                ]
-              }
+                ],
+              },
             ]
           },
         ],

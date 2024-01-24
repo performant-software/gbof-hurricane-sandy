@@ -1,0 +1,12 @@
+---
+import client from "../../../tina/__generated__/client";
+import PostLayout from "../../layouts/PostLayout.astro";
+
+
+const { slug } = Astro.params;
+
+const post = await client.queries.post({ relativePath: `${slug}.mdx`});
+
+---
+
+<PostLayout post={post.data.post} />
