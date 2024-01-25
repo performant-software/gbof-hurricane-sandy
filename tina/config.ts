@@ -127,6 +127,72 @@ export default defineConfig({
           }
         ]
       },
+      {
+        name: "path",
+        label: "Paths",
+        path: "content/paths",
+        format: "mdx",
+        fields: [
+          {
+            name: "title",
+            label: "Title",
+            type: "string",
+            required: true,
+            isTitle: true,
+          },
+          {
+            name: "image",
+            label: "Cover Image",
+            type: "image"
+          },
+          {
+            name: "description",
+            label: "Description",
+            type: "rich-text",
+            isBody: true,
+          },
+          {
+            name: "path",
+            type: "object",
+            list: true,
+            ui: {
+              itemProps: (item) => {
+                return { label: item?.place?.title}
+              }
+            },
+            fields: [
+              {
+                name: "place",
+                label: "Place Data",
+                type: "object",
+                fields: [
+                  {
+                    name: "title",
+                    label: "Title",
+                    type: "string",
+                    required: true,
+                    isTitle: true
+                  },
+                  {
+                    name: "uuid",
+                    label: "UUID",
+                    type: "string",
+                  }
+                ],
+                ui: {
+                  component: TinaPlacePicker,
+                },
+                required: true,
+              },
+              {
+                name: "blurb",
+                label: "Blurb",
+                type: "rich-text"
+              }
+            ]
+          }
+        ]
+      }
     ],
   },
 });

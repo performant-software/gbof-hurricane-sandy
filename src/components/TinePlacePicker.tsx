@@ -36,7 +36,7 @@ const TinaPlacePicker = wrapFieldsWithMeta((props: CustomTinaFieldProps) => {
         //     </Listbox.Options>
         // </Listbox>
               <Listbox value={props.input.value} onChange={props.input.onChange}>
-              <div className="relative mt-1 z-[999]">
+              <div className="relative mt-1 z-[9999]">
                 <Listbox.Button className="relative w-full cursor-pointer rounded-lg bg-white hover:bg-indigo-500/20 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                   <span className="block truncate">{places && places.features.find((place) => place.properties.uuid == props.input.value.uuid)?.properties.title || 'Select a place'}</span>
                 </Listbox.Button>

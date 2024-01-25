@@ -1,0 +1,15 @@
+---
+import client from "../../../tina/__generated__/client";
+import Layout from "../../layouts/Layout.astro";
+import PathViewer from "../../components/PathViewer";
+
+
+const { slug } = Astro.params;
+
+const path = await client.queries.path({ relativePath: `${slug}.mdx`});
+
+---
+
+<Layout title={path.data.path.title} tab="Paths">
+    <PathViewer path={path.data.path} client:only />
+</Layout>

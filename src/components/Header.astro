@@ -1,0 +1,28 @@
+---
+import MobileHeader from "./MobileHeader";
+
+export interface Props {
+    tab?: string;
+    projectName: string;
+}
+
+const { projectName, tab } = Astro.props;
+ 
+const sections = ["Map", "Posts", "Paths", "About"];
+---
+
+<div class="hidden md:inline-block w-full bg-white shadow-md z-10">
+    <div class='flex flex-row justify-between px-6 mx-0 sm:px-0 sm:mx-12 md:mx-16 lg:mx-32 2xl:mx-auto max-w-screen-xl py-8 z-10 top-0'>
+        <a href='/' class="text-2xl">{projectName}</a>
+        <div class="flex flex-row xl:gap-x-16 lg:gap-x-10 gap-x-4 justify-around">
+            <div class="flex flex-row xl:gap-x-16 lg:gap-x-12 gap-x-4 min-w-align-baseline justify-around">
+                { sections.map((sect) => ( 
+                    <a href={`/${sect.toLowerCase()}`} class="flex flex-col p-y-4 justify-center">
+                        <div class={`flex ${ sect == tab && 'font-bold border-b-2 border-b-orange-primary'}`}>{sect}</div>
+                    </a>
+                ))}
+            </div>
+        </div>
+    </div>
+</div>
+<MobileHeader sections={sections} client:load />
