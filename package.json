@@ -25,6 +25,7 @@
     "@nanostores/react": "^0.7.1",
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
+    "clsx": "^2.1.0",
     "cypress": "^13.6.3",
     "nanostores": "^0.9.5",
     "react": "^18.2.0",
