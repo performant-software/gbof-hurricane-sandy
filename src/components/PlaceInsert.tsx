@@ -1,14 +1,18 @@
 import { isModalOpen, currentPlace } from "../modalStore";
+import { CoreDataPlace } from "./CoreDataPlace";
 
 
 
 const PlaceInsert = (props: any) => {
     return (
-        <div className="flex flex-col gap-y-2 place-content-center mx-auto my-8">
-            <div className="bg-indigo-400 h-56 w-3/4 flex place-content-center mx-auto cursor-pointer place-tile p-4 rounded-lg text-sm" data-uuid={props.place.uuid}>
-                { props.place.title }
+        <div className="flex flex-col gap-y-2 place-content-center mx-auto my-8 w-3/4">
+            <div className="h-[400px] w-3/4 flex mx-auto">
+                <CoreDataPlace
+                    mapStyle={`https://api.maptiler.com/maps/dataviz/style.json?key=${import.meta.env.PUBLIC_REACT_APP_MAP_TILER_KEY}`}
+                    placeURI={`${import.meta.env.PUBLIC_CORE_DATA_API_URL}/${props.place.uuid}?project_ids=${import.meta.env.PUBLIC_CORE_DATA_PROJECT_ID}`}
+                />
             </div>
-            <div className="text-center text-lg">{props.title}</div>
+            <div className="text-center text-lg place-tile" data-uuid={props.place.uuid} onClick={() => {isModalOpen.set(true); currentPlace.set(props.place.uuid)}}>{props.title}</div>
             <p className="text-center italic text-sm">{props.caption}</p>
         </div>
     )
