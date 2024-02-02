@@ -10,5 +10,8 @@ import react from "@astrojs/react";
 export default defineConfig({
   output: "server",
   adapter: netlify(),
-  integrations: [mdx(), tailwind(), sitemap(), react()]
+  integrations: [mdx(), tailwind(), sitemap(), react()],
+  image: {
+    domains: ["assets.tina.io"],
+  }
 });
