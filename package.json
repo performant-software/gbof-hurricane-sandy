@@ -5,13 +5,13 @@
   "scripts": {
     "dev": "tinacms dev -c \"astro dev\"",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "tinacms build && astro build",
     "preview": "astro preview"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
     "@tinacms/cli": "^1.5.39",
-    "@types/node": "^20.11.5",
+    "@types/node": "^20.11.16",
     "astro": "^4.2.1",
     "prettier-plugin-astro": "^0.13.0"
   },
@@ -24,6 +24,8 @@
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
     "@nanostores/react": "^0.7.1",
+    "@peripleo/maplibre": "^0.3.2",
+    "@peripleo/peripleo": "^0.3.2",
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
     "clsx": "^2.1.0",
@@ -32,8 +34,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwindcss": "^3.4.1",
-    "tinacms": "^1.5.28",
-    "@peripleo/peripleo": "^0.3.2",
-    "@peripleo/maplibre": "^0.3.2"
+    "tinacms": "^1.5.28"
   }
 }
