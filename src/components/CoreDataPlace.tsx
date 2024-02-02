@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import type { FeatureCollection } from '@peripleo/peripleo';
 import { Peripleo, Controls } from '@peripleo/peripleo';
 import { Map, MixedGeoJSONLayer, PulsingMarkerLayer, Zoom, useMap } from '@peripleo/maplibre';
-import '@peripleo/maplibre/peripleo-maplibre.css';
-import '@peripleo/peripleo/default-theme';
 
 interface CoreDataPlaceProps {
   mapStyle: string | object;
