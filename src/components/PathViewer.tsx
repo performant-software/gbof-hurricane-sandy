@@ -1,17 +1,57 @@
+import { useEffect, useState } from "react";
+import client from "../../tina/__generated__/client";
+import { CoreDataPlace } from "./CoreDataPlace";
+import { TinaMarkdown } from "tinacms/dist/rich-text";
+import { Image } from "astro:assets";
 
 export interface PathViewerProps {
-    path: any;
+    slug: string;
 }
 
 const PathViewer = (props: PathViewerProps) => {
+
+    const [path, setPath] = useState<any | undefined>(undefined);
+    const [current, setCurrent] = useState(-1);
+
+    useEffect( () => {
+        client.queries.path({ relativePath: `${props.slug}.mdx`}).then((path) => {
+            setPath(path.data.path);
+            console.log(path);
+        });
+    }, []);
+
     return ( 
-        <div className="mx-auto width-3/4 mt-12">
-            <p className="text-xl py-6">This path contains:</p>
-            <ul>
-                { props.path.path.map((place) => (
-                    <li key={place.place.uuid}>{place.place.title}</li>
-                ))}
-            </ul>
+        <div className="w-full h-screen flex flex-row">
+            <div className="h-full w-1/2">
+                { path && current >=0 ? <CoreDataPlace
+                    mapStyle={`https://api.maptiler.com/maps/dataviz/style.json?key=${import.meta.env.PUBLIC_REACT_APP_MAP_TILER_KEY}`}
+                    placeURI={`${import.meta.env.PUBLIC_CORE_DATA_API_URL}/${path.path[current].place.uuid}?project_ids=${import.meta.env.PUBLIC_CORE_DATA_PROJECT_ID}`}
+                    fly
+                    defaultZoom={16}
+                /> : path && <img src={path.image} className="w-full" /> }
+            </div>
+            <div className="h-full w-1/2">
+                { path && (
+                    <div className="flex flex-col py-16 px-12 gap-16">
+                        { current >= 0 ? (
+                            <>
+                                <h2 className="text-3xl">{path.path[current].place.title}</h2>
+                                <TinaMarkdown content={path.path[current].blurb} />
+                                <div className="flex flex-row pt-16 w-full justify-between py-16">
+                                    <div onClick={() => current > 0 && setCurrent((i) => i-1)} className={current == 0 ? 'text-gray-500 cursor-default' : 'cursor-pointer'}>Previous</div>
+                                    <div onClick={() => current < path.path.length - 1 && setCurrent((i) => i+1)} className={current == path.path.length - 1 ? 'text-gray-500 cursor-default' : 'cursor-pointer'}>Next</div>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <h2 className="text-3xl">{path.title}</h2>
+                                <TinaMarkdown content={path.description} />
+                                <div className="cursor-pointer" onClick={() => setCurrent(0)}>Begin Path</div>
+                            </>
+                        )}
+                    </div>
+                )}
+            </div>
         </div>
     )
 };

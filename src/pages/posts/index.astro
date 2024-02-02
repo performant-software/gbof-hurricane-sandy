@@ -8,8 +8,6 @@ const postsResponse = await client.queries.postConnection();
 
 const postsData = postsResponse.data.postConnection.edges?.map((item) => item?.node);
 
-console.log(postsData);
-
 ---
 
 <Layout title="Posts" tab="Posts">

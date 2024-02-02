@@ -11,5 +11,5 @@ const path = await client.queries.path({ relativePath: `${slug}.mdx`});
 ---
 
 <Layout title={path.data.path.title} tab="Paths">
-    <PathViewer path={path.data.path} client:only />
+    <PathViewer slug={slug} client:only />
 </Layout>
