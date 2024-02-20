@@ -1,6 +1,5 @@
-import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Disclosure, Transition } from '@headlessui/react'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
@@ -21,9 +20,9 @@ const MobileHeader = (props: MobileHeaderProps) => {
               <span className="absolute -inset-0.5" />
               <span className="sr-only">Open main menu</span>
               {open ? (
-              <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
               ) : (
-              <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
               )}
             </Disclosure.Button>
           </div>
@@ -38,7 +37,7 @@ const MobileHeader = (props: MobileHeaderProps) => {
             <Disclosure.Panel className="md:hidden bg-white">
               <div className="space-y-1 pb-3 pt-2">
                 {/* Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" */}
-                { props.sections.map((sect) => (
+                {props.sections.map((sect) => (
                   <Disclosure.Button
                     as="a"
                     href={`/${sect.toLowerCase()}`}
@@ -46,7 +45,7 @@ const MobileHeader = (props: MobileHeaderProps) => {
                   >
                     {sect}
                   </Disclosure.Button>
-                  )
+                )
                 )}
               </div>
             </Disclosure.Panel>

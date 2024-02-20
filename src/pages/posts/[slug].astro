@@ -1,11 +1,8 @@
 ---
-import client from "../../../tina/__generated__/client";
 import Container from "../../components/Container.astro";
 import PlaceDetailModal from "../../components/PlaceDetailModal";
 import PostContent from "../../components/PostContent";
 import Layout from "../../layouts/Layout.astro";
-import MapLayout from "../../layouts/MapLayout.astro";
-import PostLayout from "../../layouts/PostLayout.astro";
 
 
 const { slug } = Astro.params;
@@ -15,12 +12,10 @@ const { slug } = Astro.params;
 ---
 
 <Layout title={slug} tab="Posts">
-    <main class="w-full">
-        <Container>
-            <PostContent slug={slug} client:only />       
-        </Container>
-        <PlaceDetailModal client:only />
-    </main>
-
-
+  <main class="w-full">
+    <Container>
+      <PostContent slug={slug} client:only />
+    </Container>
+    <PlaceDetailModal client:only />
+  </main>
 </Layout>

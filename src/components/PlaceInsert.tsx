@@ -12,7 +12,7 @@ const PlaceInsert = (props: any) => {
                     placeURI={`${import.meta.env.PUBLIC_CORE_DATA_API_URL}/${props.place.uuid}?project_ids=${import.meta.env.PUBLIC_CORE_DATA_PROJECT_ID}`}
                 />
             </div>
-            <div className="text-center text-lg place-tile" data-uuid={props.place.uuid} onClick={() => {isModalOpen.set(true); currentPlace.set(props.place.uuid)}}>{props.title}</div>
+            <div className="text-center text-lg place-tile" data-uuid={props.place.uuid} onClick={() => { isModalOpen.set(true); currentPlace.set(props.place.uuid) }}>{props.title}</div>
             <p className="text-center italic text-sm">{props.caption}</p>
         </div>
     )

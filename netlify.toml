@@ -4,11 +4,15 @@
   functions = "netlify/functions"
   publish = "dist"
 
-# [[plugins]] 
+# [[plugins]]
 #   package = "netlify-plugin-cypress"
 
 #   [plugins.inputs.postBuild]
 #     enable = true
-  
+
 #   [plugin.inputs]
 #     enable = false
+
+[images]
+
+  remote_images = ["https://assets.tina.io"]

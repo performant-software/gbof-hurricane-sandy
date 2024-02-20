@@ -7,7 +7,7 @@ export interface Props {
 }
 
 const { projectName, tab } = Astro.props;
- 
+
 const sections = ["Map", "Posts", "Paths", "About"];
 ---
 
@@ -16,7 +16,7 @@ const sections = ["Map", "Posts", "Paths", "About"];
         <a href='/' class="text-2xl">{projectName}</a>
         <div class="flex flex-row xl:gap-x-16 lg:gap-x-10 gap-x-4 justify-around">
             <div class="flex flex-row xl:gap-x-16 lg:gap-x-12 gap-x-4 min-w-align-baseline justify-around">
-                { sections.map((sect) => ( 
+                { sections.map((sect) => (
                     <a href={`/${sect.toLowerCase()}`} class="flex flex-col p-y-4 justify-center">
                         <div class={`flex ${ sect == tab && 'font-bold border-b-2 border-b-orange-primary'}`}>{sect}</div>
                     </a>
