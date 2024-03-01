@@ -99,8 +99,6 @@ export const CoreDataPlaceLayer = (props: CoreDataPlaceLayerProps) => {
           }
         };
 
-        console.log(place);
-
         setPlace({
           type: 'FeatureCollection',
           features: [place]

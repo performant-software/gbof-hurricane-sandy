@@ -11,7 +11,6 @@ interface CustomTinaFieldProps {
 };
 
 const TinaPlacePicker = wrapFieldsWithMeta((props: CustomTinaFieldProps) => {
-  console.log(props);
 
   const [places, setPlaces] = useState<any>();
   const [query, setQuery] = useState('');
