@@ -28,7 +28,7 @@ const PathViewer = (props: PathViewerProps) => {
                     defaultZoom={16}
                 /> : path && <img src={path.image} className="w-full" />}
             </div>
-            <div className="h-full w-1/2">
+            <div className="h-full w-1/2 overflow-y-scroll">
                 {path && (
                     <div className="flex flex-col py-16 px-12 gap-16">
                         {current >= 0 ? (
