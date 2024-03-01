@@ -21,7 +21,9 @@ const PostContent = (props: PostContentProps) => {
     return (
         <div>
             <h1 className="text-3xl py-6">{title}</h1>
-            <TinaMarkdown content={content} components={{ place: PlaceInsert }} />
+            <article className="prose">
+                <TinaMarkdown content={content} components={{ place: PlaceInsert }} />
+            </article>
         </div>
     )
 };
