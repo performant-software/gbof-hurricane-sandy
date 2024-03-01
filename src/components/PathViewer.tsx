@@ -15,7 +15,6 @@ const PathViewer = (props: PathViewerProps) => {
     useEffect(() => {
         client.queries.path({ relativePath: `${props.slug}.mdx` }).then((path) => {
             setPath(path.data.path);
-            console.log(path);
         });
     }, []);
 
@@ -35,7 +34,7 @@ const PathViewer = (props: PathViewerProps) => {
                         {current >= 0 ? (
                             <>
                                 <h2 className="text-3xl">{path.path[current].place.title}</h2>
-                                <TinaMarkdown content={path.path[current].blurb} />
+                                <article className="prose"><TinaMarkdown content={path.path[current].blurb} /></article>
                                 <div className="flex flex-row pt-16 w-full justify-between py-16">
                                     <div onClick={() => current > 0 && setCurrent((i) => i - 1)} className={current == 0 ? 'text-gray-500 cursor-default' : 'cursor-pointer'}>Previous</div>
                                     <div onClick={() => current < path.path.length - 1 && setCurrent((i) => i + 1)} className={current == path.path.length - 1 ? 'text-gray-500 cursor-default' : 'cursor-pointer'}>Next</div>
@@ -44,7 +43,7 @@ const PathViewer = (props: PathViewerProps) => {
                         ) : (
                             <>
                                 <h2 className="text-3xl">{path.title}</h2>
-                                <TinaMarkdown content={path.description} />
+                                <article className="prose prose-xl"><TinaMarkdown content={path.description} /></article>
                                 <div className="cursor-pointer" onClick={() => setCurrent(0)}>Begin Path</div>
                             </>
                         )}
