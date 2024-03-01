@@ -33,6 +33,7 @@ const PathViewer = (props: PathViewerProps) => {
                     <div className="flex flex-col py-16 px-12 gap-16">
                         {current >= 0 ? (
                             <>
+                                <div onClick={() => setCurrent(-1)} className="cursor-pointer">Go Back</div>
                                 <h2 className="text-3xl">{path.path[current].place.title}</h2>
                                 <article className="prose"><TinaMarkdown content={path.path[current].blurb} /></article>
                                 <div className="flex flex-row pt-16 w-full justify-between py-16">
