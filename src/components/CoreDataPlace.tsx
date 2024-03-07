@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import type { FeatureCollection } from '@peripleo/peripleo';
 import { Peripleo, Controls } from '@peripleo/peripleo';
 import { Map, MixedGeoJSONLayer, PulsingMarkerLayer, Zoom, useMap } from '@peripleo/maplibre';
+import { PlaceMarker } from '@performant-software/core-data';
 
 interface CoreDataPlaceProps {
   mapStyle: string | object;
@@ -66,6 +67,9 @@ export const CoreDataPlace = (props: CoreDataPlaceProps) => {
           strokeStyle={props.strokeStyle}
           defaultZoom={props.defaultZoom} 
           fly={props.fly} />
+        {/* <PlaceMarker
+          url={props.placeURI}
+        /> */}
       </Map>
     </Peripleo>
   )
