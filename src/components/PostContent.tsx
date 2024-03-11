@@ -19,9 +19,9 @@ const PostContent = (props: PostContentProps) => {
     }, []);
 
     return (
-        <div>
+        <div className="w-full">
             <h1 className="text-3xl py-6">{title}</h1>
-            <article className="prose">
+            <article className="prose max-w-none w-full">
                 <TinaMarkdown content={content} components={{ place: PlaceInsert }} />
             </article>
         </div>
