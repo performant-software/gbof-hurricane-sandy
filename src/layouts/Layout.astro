@@ -1,13 +1,13 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
-import '../style/demo-styling.css'
 import Header from '../components/Header.astro';
 import '@peripleo/maplibre/peripleo-maplibre.css';
 import '@peripleo/peripleo/default-theme';
+import '@performant-software/core-data/style.css';
 
 export interface Props {
 	title: string;
-  tab?: string;
+  	tab?: string;
 }
 
 const { title, tab } = Astro.props as Props;
@@ -22,9 +22,11 @@ const { title, tab } = Astro.props as Props;
 	<title>{title}</title>
   <ViewTransitions />
 </head>
-<body class="flex sm:min-h-screen flex-col min-w-fit bg-gray-300" transition:animate="initial">
-  <Header projectName="Project Name" tab={tab} />
-	<slot />
+<body class='flex h-full flex-col bg-white 3xl:bg-neutral-dark text-neutral-dark 3xl:max-w-screen-3xl mx-auto' transition:animate="initial">
+  <Header tab={tab} />
+  <main class="w-full min-h-screen bg-white">
+	  <slot />
+  </main>
 </body>
 </html>
 

@@ -12,10 +12,8 @@ const { slug } = Astro.params;
 ---
 
 <Layout title={slug} tab="Posts">
-  <main class="w-full">
-    <Container>
-      <PostContent slug={slug} client:only />
-    </Container>
-    <PlaceDetailModal client:only />
-  </main>
+  <Container>
+    <PostContent slug={slug} client:only />
+  </Container>
+  <PlaceDetailModal client:only />
 </Layout>

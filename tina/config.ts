@@ -30,6 +30,49 @@ export default defineConfig({
   schema: {
     collections: [
       {
+        name: "about",
+        label: "About the Project",
+        path: "content/about",
+        format: "mdx",
+        fields: [
+          {
+            type: "string",
+            name: "title",
+            label: "Project Title",
+          },
+          {
+            type: "string",
+            name: "subheader",
+            label: "Subheader",
+            ui: {
+              component: "textarea"
+            }
+          },
+          {
+            type: "rich-text",
+            name: "description",
+            label: "Project Description",
+            isBody: true
+          },
+          {
+            type: "image",
+            name: "heroImage",
+            label: "Hero Image"
+          },
+          {
+            type: "image",
+            name: "featureImage",
+            label: "Feature Image"
+          }
+        ],
+        ui: {
+          allowedActions: {
+            create: false,
+            delete: false
+          }
+        }
+      },
+      {
         name: "post",
         label: "Posts",
         path: "content/posts",
@@ -101,32 +144,32 @@ export default defineConfig({
           },
         ],
       },
-      {
-        name: "place",
-        label: "Places",
-        path: "content/places",
-        fields: [
-          {
-            name: "name",
-            label: "Place Name",
-            type: "string",
-            required: true,
-            isTitle: true,
-          },
-          {
-            name: "core_data_id",
-            label: "Core Data Place ID",
-            type: "string",
-            required: true,
-          },
-          {
-            name: "description",
-            label: "Description",
-            type: "rich-text",
-            isBody: true,
-          }
-        ]
-      },
+      // {
+      //   name: "place",
+      //   label: "Places",
+      //   path: "content/places",
+      //   fields: [
+      //     {
+      //       name: "name",
+      //       label: "Place Name",
+      //       type: "string",
+      //       required: true,
+      //       isTitle: true,
+      //     },
+      //     {
+      //       name: "core_data_id",
+      //       label: "Core Data Place ID",
+      //       type: "string",
+      //       required: true,
+      //     },
+      //     {
+      //       name: "description",
+      //       label: "Description",
+      //       type: "rich-text",
+      //       isBody: true,
+      //     }
+      //   ]
+      // },
       {
         name: "path",
         label: "Paths",
