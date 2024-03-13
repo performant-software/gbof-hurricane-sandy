@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import type { FeatureCollection } from '@peripleo/peripleo';
 import { Peripleo, Controls } from '@peripleo/peripleo';
 import { Map, MixedGeoJSONLayer, PulsingMarkerLayer, Zoom, useMap } from '@peripleo/maplibre';
+import { PlaceMarker } from '@performant-software/core-data';
 
 interface CoreDataPlaceProps {
   mapStyle: string | object;
@@ -58,14 +59,17 @@ export const CoreDataPlace = (props: CoreDataPlaceProps) => {
         <Controls position="topright">
           <Zoom />
         </Controls>
-
+      {/* 
         <CoreDataPlaceLayer 
           uri={props.placeURI} 
           fillStyle={props.fillStyle}
           pointStyle={props.pointStyle}
           strokeStyle={props.strokeStyle}
           defaultZoom={props.defaultZoom} 
-          fly={props.fly} />
+          fly={props.fly} /> */}
+        <PlaceMarker
+          url={props.placeURI}
+        />
       </Map>
     </Peripleo>
   )
@@ -91,7 +95,7 @@ export const CoreDataPlaceLayer = (props: CoreDataPlaceLayerProps) => {
     fetch(props.uri)
       .then(res => res.json())
       .then(data => {
-        const place = {
+        const placeData = {
           ...data,
           properties: {
             ...data.properties,
@@ -101,10 +105,10 @@ export const CoreDataPlaceLayer = (props: CoreDataPlaceLayerProps) => {
 
         setPlace({
           type: 'FeatureCollection',
-          features: [place]
+          features: [placeData]
         });
 
-        place?.geometry?.coordinates && props?.fly ? map.flyTo({ center: place.geometry.coordinates, zoom: props.defaultZoom || 12 }) : map.jumpTo({ center: place.geometry.coordinates, zoom: props.defaultZoom || 12 });
+        placeData?.geometry?.coordinates && props?.fly ? map.flyTo({ center: placeData.geometry.coordinates, zoom: props.defaultZoom || 12 }) : map.jumpTo({ center: placeData.geometry.coordinates, zoom: props.defaultZoom || 12 });
       });
   }, [props.uri])
 

@@ -1,18 +1,34 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Container from '../components/Container.astro';
+import Hero from '../components/Hero.astro';
+import client from '../../tina/__generated__/client';
+import { TinaMarkdown } from 'tinacms/dist/rich-text';
+
+const projectResponse = await client.request({
+  query: `query getAbout($relativePath: String!) {
+      about(relativePath: $relativePath) {
+        title
+        subheader
+        description
+      }
+    }`,
+  variables: { relativePath: 'about.mdx' },
+});
+
+const { title, subheader, description } = projectResponse.data.about;
+
 ---
 
-<Layout title="The Ground Beneath Our Feet">
-	<main>
-    <!-- <Hero /> -->
-    <Container className="my-12">
-      <h2 class="text-2x">About the Project</h2>
-      <p class="py-12">
-        In the nineteenth century, a thriving Spanish-language publishing community centered in lower Manhattan. The activities of the popular English-language press in the same neighborhood--especially on Newspaper Row--are well known. But the Spanish-language press that once resided there is only known to us in fragments--or through the lens of its most famous members, particularly José Martí.
-
-To recover the history of New York City's nineteenth-century Latina/o press, Pace University's Babble Lab has been locating the forgotten sites of the publications that once resided there and beginning to re-imagine the ways in which writers and editors of the city's Spanish- and English-languages publishing communities might have interacted with each other.
-      </p>
-    </Container>
-	</main>
+<Layout title={title}>
+  <Hero 
+    title={title}
+    subheader={subheader}
+  />
+  <Container className="my-12">
+    <h2 class="text-2x">About the Project</h2>
+    <p class="py-12 prose max-w-none">
+      <TinaMarkdown content={description} />
+    </p>
+  </Container>
 </Layout>

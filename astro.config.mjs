@@ -10,5 +10,17 @@ import react from "@astrojs/react";
 export default defineConfig({
   output: "server",
   adapter: netlify(),
-  integrations: [mdx(), tailwind(), sitemap(), react()]
+  integrations: [mdx(), tailwind(), sitemap(), react()],
+  vite: {
+    resolve: {
+      preserveSymlinks: true,
+      mainFields: [
+        'browser',
+        'module',
+        'main',
+        'jsnext:main',
+        'jsnext'
+      ]
+    }
+  }
 });
