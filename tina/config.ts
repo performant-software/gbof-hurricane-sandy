@@ -1,5 +1,5 @@
 import { defineConfig } from "tinacms";
-import TinaPlacePicker from "../src/components/TinePlacePicker";
+import TinaPlacePicker from "../src/components/TinaPlacePicker";
 
 // Your hosting provider likely exposes this as an environment variable
 const branch =
@@ -123,6 +123,21 @@ export default defineConfig({
                         name: "uuid",
                         label: "UUID",
                         type: "string",
+                      },
+                      {
+                        name: "animate",
+                        label: "Animate pulsing place marker?",
+                        type: "boolean"
+                      },
+                      {
+                        name: "buffer",
+                        label: "Map zoom buffer (in miles)",
+                        type: "number"
+                      },
+                      {
+                        name: "layerID",
+                        label: "Custom Map Layer",
+                        type: "number"
                       }
                     ],
                     ui: {
@@ -144,32 +159,6 @@ export default defineConfig({
           },
         ],
       },
-      // {
-      //   name: "place",
-      //   label: "Places",
-      //   path: "content/places",
-      //   fields: [
-      //     {
-      //       name: "name",
-      //       label: "Place Name",
-      //       type: "string",
-      //       required: true,
-      //       isTitle: true,
-      //     },
-      //     {
-      //       name: "core_data_id",
-      //       label: "Core Data Place ID",
-      //       type: "string",
-      //       required: true,
-      //     },
-      //     {
-      //       name: "description",
-      //       label: "Description",
-      //       type: "rich-text",
-      //       isBody: true,
-      //     }
-      //   ]
-      // },
       {
         name: "path",
         label: "Paths",
@@ -220,6 +209,21 @@ export default defineConfig({
                     name: "uuid",
                     label: "UUID",
                     type: "string",
+                  },
+                  {
+                    name: "animate",
+                    label: "Animate pulsing place marker?",
+                    type: "boolean"
+                  },
+                  {
+                    name: "buffer",
+                    label: "Map zoom buffer (in miles)",
+                    type: "number"
+                  },
+                  {
+                    name: "layer",
+                    label: "Custom Map Layer",
+                    type: "number"
                   }
                 ],
                 ui: {
