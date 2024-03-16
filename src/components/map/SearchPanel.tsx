@@ -4,6 +4,7 @@ import { useGeoSearch, useInfiniteHits, useSearchBox } from 'react-instantsearch
 import SearchBox from './SearchBox';
 import SearchCount from './SearchCount';
 import SearchResultsList from './SearchResultsList';
+import SearchResultsMap from './SearchResultsMap';
 
 const SearchPanel = () => {
   const geoSearch = useGeoSearch();
@@ -33,6 +34,11 @@ const SearchPanel = () => {
           <SearchResultsList />
         </div>
       </aside>
+      <div
+        className="w-full h-screen"
+      >
+        <SearchResultsMap />
+      </div>
     </PersistentSearchStateContextProvider>
   );
 };

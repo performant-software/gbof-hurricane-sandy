@@ -70,6 +70,7 @@ interface RowProps {
 const SearchResultsList = (props: Props) => {
   const { hover, onHoverChange } = props;
   const hits = useCachedHits();
+  console.log(hits);
 
   const Row = ({ index, style }: RowProps) => {
     const hit = hits[index];

@@ -9,7 +9,7 @@ const PlaceInsert = (props: any) => {
             <div className="h-[400px] w-3/4 flex mx-auto">
                 <CoreDataPlace
                     mapStyle={`https://api.maptiler.com/maps/dataviz/style.json?key=${import.meta.env.PUBLIC_REACT_APP_MAP_TILER_KEY}`}
-                    placeURI={`${import.meta.env.PUBLIC_CORE_DATA_API_URL}/${props.place.uuid}?project_ids=${import.meta.env.PUBLIC_CORE_DATA_PROJECT_ID}`}
+                    placeURIs={[`${import.meta.env.PUBLIC_CORE_DATA_API_URL}/${props.place.uuid}?project_ids=${import.meta.env.PUBLIC_CORE_DATA_PROJECT_ID}`]}
                 />
             </div>
             <div className="text-center text-lg place-tile">{props.title}</div>

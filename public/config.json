@@ -64,37 +64,16 @@
       "host": "i74olkjcuy69ze2vp-1.a1.typesense.net",
       "port": 443,
       "protocol": "https",
-      "api_key": "MSa9kCqrjAxCHpT6OhiI8RAvXflIaxO0",
-      "index_name": "georgia_coast_atlas",
-      "query_by": "name,names",
+      "api_key": "NgeY4qBzdlQXvNYRYWt5xMDXurbUQhPZ",
+      "index_name": "ground_beneath_our_feet_places",
+      "query_by": "name",
       "facets": {
-        "exclude": [
-          "related_organizations.description",
-          "related_organizations.name",
-          "related_organizations.record_id",
-          "related_organizations.type",
-          "related_organizations.uuid",
-          "related_palces.geometry.coordinates",
-          "related_people.biography",
-          "related_people.name",
-          "related_people.record_id",
-          "related_people.type",
-          "related_people.uuid",
-          "related_places.geometry.coordinates",
-          "related_places.geometry.geometries.coordinates",
-          "related_places.geometry.geometries.type",
-          "related_places.geometry.type",
-          "related_places.name",
-          "related_places.record_id",
-          "related_places.type",
-          "related_places.uuid"
-        ]
       }
     },
     "core_data": {
       "url": "https://core-data-cloud-staging-2c51db0617a5.herokuapp.com",
       "project_ids": [
-        10
+        24
       ]
     }
   }
