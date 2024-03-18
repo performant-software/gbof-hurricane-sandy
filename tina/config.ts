@@ -137,7 +137,8 @@ export default defineConfig({
                       {
                         name: "layerID",
                         label: "Custom Map Layer",
-                        type: "number"
+                        type: "number",
+                        list: true
                       }
                     ],
                     ui: {
@@ -223,7 +224,8 @@ export default defineConfig({
                   {
                     name: "layer",
                     label: "Custom Map Layer",
-                    type: "number"
+                    type: "number",
+                    list: true
                   }
                 ],
                 ui: {

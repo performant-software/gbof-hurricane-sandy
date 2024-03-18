@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import client from "../../tina/__generated__/client";
 import { CoreDataPlace } from "./CoreDataPlace";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
+import { Controls, Peripleo } from "@peripleo/peripleo";
+import { Map, Zoom } from "@peripleo/maplibre";
+import { PlaceMarkers } from "@performant-software/core-data";
 
 export interface PathViewerProps {
     slug: string;
@@ -21,12 +24,34 @@ const PathViewer = (props: PathViewerProps) => {
     return (
         <div className="w-full h-screen flex flex-row">
             <div className="h-full w-1/2">
-                {path && current >= 0 ? <CoreDataPlace
-                    mapStyle={`https://api.maptiler.com/maps/dataviz/style.json?key=${import.meta.env.PUBLIC_REACT_APP_MAP_TILER_KEY}`}
-                    placeURI={`${import.meta.env.PUBLIC_CORE_DATA_API_URL}/${path.path[current].place.uuid}?project_ids=${import.meta.env.PUBLIC_CORE_DATA_PROJECT_ID}`}
-                    fly
-                    defaultZoom={16}
-                /> : path && <img src={path.image} className="w-full" />}
+                {path && current >= 0 ? (
+                    <Peripleo>
+                        <Map style={`https://api.maptiler.com/maps/dataviz/style.json?key=${import.meta.env.PUBLIC_REACT_APP_MAP_TILER_KEY}`}>
+                            <Controls position="topright">
+                                <Zoom />
+                            </Controls>
+                            <PlaceMarkers
+                                urls={[`${import.meta.env.PUBLIC_CORE_DATA_API_URL}/${path.path[current].place.uuid}?project_ids=${import.meta.env.PUBLIC_CORE_DATA_PROJECT_ID}`]}
+                                buffer={path.path[current].place?.buffer}
+                                animate={path.path[current].place?.animate}
+                                key={path.path[current].place.uuid}
+                            />
+                        </Map>
+                    </Peripleo>
+                ) : path && (
+                    <Peripleo>
+                        <Map style={`https://api.maptiler.com/maps/dataviz/style.json?key=${import.meta.env.PUBLIC_REACT_APP_MAP_TILER_KEY}`}>
+                            <Controls position="topright">
+                                <Zoom />
+                            </Controls>
+                            <PlaceMarkers
+                                urls={path.path.map((current) => `${import.meta.env.PUBLIC_CORE_DATA_API_URL}/${current.place.uuid}?project_ids=${import.meta.env.PUBLIC_CORE_DATA_PROJECT_ID}`)}
+                                animate={false}
+                                key='cover'
+                            />
+                        </Map>
+                    </Peripleo>
+                )}
             </div>
             <div className="h-full w-1/2 overflow-y-scroll">
                 {path && (

@@ -45,10 +45,15 @@ const TinaPlacePicker = wrapFieldsWithMeta((props: CustomTinaFieldProps) => {
   };
 
   const onUpdateLayer = (e: any) => {
+    console.log(props.input.value.layer, props.input.value.layer.includes(e.target.value), props.input.value.layer.includes(parseInt(e.target.value)));
+    console.log(props.input.value.layer.filter((layer: any) => parseInt(layer) != parseInt(e.target.value) ));
+    const newLayer = !props.input.value?.layer ? [ parseInt(e.target.value) ]
+      : props.input.value.layer.includes(parseInt(e.target.value)) ? props.input.value.layer.filter((layer: any) => parseInt(layer) != parseInt(e.target.value) ) : [ ...props.input.value.layer, parseInt(e.target.value) ];
     const newData = {
       ...props.input.value,
-      layer: e
+      layer: newLayer
     };
+    console.log(newLayer, newData);
     props.input.onChange(newData);
   };
 
@@ -79,7 +84,6 @@ const TinaPlacePicker = wrapFieldsWithMeta((props: CustomTinaFieldProps) => {
 
   useEffect(() => {
     props.input.value.uuid && fetchPlace(props.input.value.uuid);
-    console.log(selectedPlace);
   }, [props.input.value]);
 
   useEffect(() => {
@@ -182,25 +186,31 @@ const TinaPlacePicker = wrapFieldsWithMeta((props: CustomTinaFieldProps) => {
                   />
                 </div>
               </div>
-              { selectedPlace.place_layers.length > 0 && (<RadioGroup name="plan" defaultValue={props.input.value ? props.input.value?.layer ? props.input.value.layer : -1 : -1} onChange={onUpdateLayer} className="flex flex-col gap-2">
-                <RadioGroup.Label className="font-bold py-2">Custom Map Layer</RadioGroup.Label>
-                {selectedPlace.place_layers.map((layer: any) => (
-                  <RadioGroup.Option key={layer.id} value={layer.id}>
-                    {({ checked }) => (
-                      <span className={`${checked ? '!bg-blue-300 border-blue-600' : 'border-gray-200'} p-2 rounded-md cursor-pointer`}>
-                        { layer.name }
-                      </span>
-                    )}
-                  </RadioGroup.Option>
-                ))}
-                <RadioGroup.Option value={-1}>
-                  {({ checked }) => (
-                    <span className={`${checked ? '!bg-blue-300 border-blue-600' : 'border-gray-200'} p-2 rounded-md cursor-pointer`}>
-                      None
-                    </span>
-                  )}
-                </RadioGroup.Option>
-              </RadioGroup>)}
+              { selectedPlace.place_layers.length > 0 && (<fieldset>
+                <legend className="text-base font-semibold leading-6 text-gray-900">Layers</legend>
+                <div className="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
+                  {selectedPlace.place_layers.map((layer: any) => (
+                    <div key={layer.id} className="relative flex items-start py-4">
+                      <div className="min-w-0 flex-1 text-sm leading-6">
+                        <label htmlFor={`layer-${layer.id}`} className="select-none font-medium text-gray-900">
+                          {layer.name}
+                        </label>
+                      </div>
+                      <div className="ml-3 flex h-6 items-center">
+                        <input
+                          id={`layer-${layer.id}`}
+                          name={`layer-${layer.id}`}
+                          type="checkbox"
+                          value={layer.id}
+                          defaultChecked={props.input.value?.layer && props.input.value.layer.includes(layer.id)}
+                          onChange={onUpdateLayer}
+                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </fieldset>)}
         </div>
       )}
     </div>

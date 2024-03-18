@@ -12,6 +12,9 @@ interface CoreDataPlaceProps {
   strokeStyle?: object;
   defaultZoom?: number;
   fly?: boolean;
+  layer?: number[];
+  animate?: boolean;
+  buffer?: number;
 };
 
 export const DEFAULT_POINT_STYLE = {
@@ -59,16 +62,10 @@ export const CoreDataPlace = (props: CoreDataPlaceProps) => {
         <Controls position="topright">
           <Zoom />
         </Controls>
-      {/* 
-        <CoreDataPlaceLayer 
-          uri={props.placeURI} 
-          fillStyle={props.fillStyle}
-          pointStyle={props.pointStyle}
-          strokeStyle={props.strokeStyle}
-          defaultZoom={props.defaultZoom} 
-          fly={props.fly} /> */}
         <PlaceMarkers
           urls={props.placeURIs}
+          buffer={props.buffer}
+          animate={props.animate}
         />
       </Map>
     </Peripleo>
