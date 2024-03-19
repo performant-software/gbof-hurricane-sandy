@@ -3,15 +3,9 @@ import { Peripleo, RuntimeConfig } from '@peripleo/peripleo';
 import SearchPanel from './SearchPanel';
 import TypesenseSearch from './TypesenseSearch';
 import MapView from './MapView';
+import { translations } from '../../helpers/i18n';
 
 const Search = () => {
-  // this is not elegant but seems to be necessary for now
-  const translations = {
-    t_selectMapLayers: () => 'Select Map Layers',
-    t_baseLayers: () => 'Base Layers',
-    t_overlays: () => 'Overlays'
-  };
-
   return (
     <RuntimeConfig
       //@ts-ignore
