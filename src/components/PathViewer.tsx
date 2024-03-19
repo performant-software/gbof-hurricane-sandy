@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import client from "../../tina/__generated__/client";
-import { CoreDataPlace } from "./CoreDataPlace";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import { Controls, Peripleo } from "@peripleo/peripleo";
 import { Map, Zoom } from "@peripleo/maplibre";

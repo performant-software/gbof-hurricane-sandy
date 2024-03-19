@@ -19,7 +19,7 @@ const PlaceDetail = (props: PlaceDetailProps) => {
         const orgsUrl = `${import.meta.env.PUBLIC_CORE_DATA_API_URL}/${props.placeId}/organizations/?project_ids=${import.meta.env.PUBLIC_CORE_DATA_PROJECT_ID}`;
         const relatedPeopleUrl = `${import.meta.env.PUBLIC_CORE_DATA_API_URL}/${props.placeId}/people?project_ids=${import.meta.env.PUBLIC_CORE_DATA_PROJECT_ID}`;
         const relatedMediaUrl = `${import.meta.env.PUBLIC_CORE_DATA_API_URL}/${props.placeId}/media_contents?project_ids=${import.meta.env.PUBLIC_CORE_DATA_PROJECT_ID}`;
-        const loadPlace = async (placeId: string) => {
+        const loadPlace = async () => {
             const placeData = await fetch(placeUrl).then((res) => res.json());
             const relatedPlaceData = await fetch(relatedPlacesUrl).then((res) => res.json());
             const orgsData = await fetch(orgsUrl).then((res) => res.json());
@@ -49,7 +49,7 @@ const PlaceDetail = (props: PlaceDetailProps) => {
             });
         }
 
-        loadPlace(props.placeId);
+        loadPlace();
     }, [props]);
 
     return (
@@ -58,7 +58,7 @@ const PlaceDetail = (props: PlaceDetailProps) => {
                 place={place}
                 related={[ relatedPeople, orgs, relatedPlaces, relatedMedia ].filter((cat) => cat.data.items.length > 0)}
                 onClose={props.onClose}
-            /> : <p>Loading place info...</p> }
+            /> : <p className="p-6">Loading place info...</p> }
         </>
     )
 };

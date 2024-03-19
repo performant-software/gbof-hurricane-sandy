@@ -60,6 +60,7 @@ const HitComponent = (props: HitComponentProps) => {
 interface Props {
   hover?: Feature<{ id: string }>;
   onHoverChange?(hover?: Feature<{ id: string }>): void;
+  onClick: (_hit: any) => void;
 }
 
 interface RowProps {
@@ -68,9 +69,8 @@ interface RowProps {
 }
 
 const SearchResultsList = (props: Props) => {
-  const { hover, onHoverChange } = props;
+  const { hover, onHoverChange, onClick } = props;
   const hits = useCachedHits();
-  console.log(hits);
 
   const Row = ({ index, style }: RowProps) => {
     const hit = hits[index];
@@ -97,7 +97,7 @@ const SearchResultsList = (props: Props) => {
         <HitComponent
           hit={hit}
           isHovered={hover?.id === parseInt(hit?.record_id)}
-          onClick={() => console.log(hit)}
+          onClick={() => onClick(hit)}
         />
       </div>
     )

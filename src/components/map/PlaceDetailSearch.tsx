@@ -1,17 +1,26 @@
 import { I18nContext, Peripleo as PeripleoUtils } from '@performant-software/core-data';
 import { Peripleo, RuntimeConfig } from '@peripleo/peripleo';
-import SearchPanel from './SearchPanel';
-import TypesenseSearch from './TypesenseSearch';
-import MapView from './MapView';
+import PlaceDetailSidebar from './PlaceDetailSidebar';
+import PlaceDetailMapView from './PlaceDetailMapView';
 
-const Search = () => {
+export interface PlaceDetailSearchProps {
+    placeId: string;
+}
+
+const PlaceDetailSearch = (props: PlaceDetailSearchProps) => {
+  const { placeId } = props;
+
+  const onClose = () => {
+    window.location.href = '/map';
+  }
+
   // this is not elegant but seems to be necessary for now
   const translations = {
     t_selectMapLayers: () => 'Select Map Layers',
     t_baseLayers: () => 'Base Layers',
     t_overlays: () => 'Overlays'
   };
-
+  
   return (
     <RuntimeConfig
       //@ts-ignore
@@ -22,14 +31,17 @@ const Search = () => {
         value={{ translations: translations }}
       >
         <Peripleo>
-          <TypesenseSearch>
-            <SearchPanel />
-            <MapView />
-          </TypesenseSearch>
+            <PlaceDetailSidebar
+                placeId={placeId}
+                onClose={onClose}
+            />
+            <PlaceDetailMapView 
+                placeId={placeId}
+            />
         </Peripleo>
       </I18nContext.Provider>
     </RuntimeConfig>
   );
 };
 
-export default Search;
+export default PlaceDetailSearch;

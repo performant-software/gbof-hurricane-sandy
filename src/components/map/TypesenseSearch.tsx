@@ -1,11 +1,34 @@
-import { Peripleo as PeripleoUtils, Typesense as TypesenseUtils } from '@performant-software/core-data';
-import { useRuntimeConfig as _useRuntimeConfig } from '@peripleo/peripleo';
+import {
+  PersistentSearchStateContextProvider,
+  Typesense as TypesenseUtils
+} from '@performant-software/core-data';
+import { useRuntimeConfig } from '@peripleo/peripleo';
 import { type ReactNode, useMemo } from 'react';
-import { InstantSearch } from 'react-instantsearch';
+import {
+  InstantSearch,
+  useGeoSearch,
+  useInfiniteHits,
+  useSearchBox
+} from 'react-instantsearch';
+
+const SearchProvider = (props: { children: ReactNode }) => {
+  const geoSearch = useGeoSearch();
+  const infiniteHits = useInfiniteHits();
+  const searchBox = useSearchBox();
+
+  return (
+    <PersistentSearchStateContextProvider
+      infiniteHits={infiniteHits}
+      geoSearch={geoSearch}
+      searchBox={searchBox}
+    >
+      { props.children }
+    </PersistentSearchStateContextProvider>
+  )
+};
 
 const TypesenseSearch = (props: { children: ReactNode }) => {
-  const rawConfig = _useRuntimeConfig();
-  const config = PeripleoUtils.filterLayers(rawConfig);
+  const config = useRuntimeConfig<any>();
 
   const adapter = useMemo(() => TypesenseUtils.createTypesenseAdapter(config), []);
   const routing = useMemo(() => TypesenseUtils.createRouting(config), []);
@@ -19,7 +42,9 @@ const TypesenseSearch = (props: { children: ReactNode }) => {
         preserveSharedStateOnUnmount: true
       }}
     >
-      { props.children }
+      <SearchProvider>
+        { props.children }
+      </SearchProvider>
     </InstantSearch>
   )
 };

@@ -1,5 +1,5 @@
 import { isModalOpen, currentPlace } from "../modalStore";
-import { CoreDataPlace } from "./CoreDataPlace";
+import CoreDataPlace from "./CoreDataPlace";
 
 
 

@@ -22,7 +22,7 @@ const { title, tab } = Astro.props as Props;
 	<title>{title}</title>
   <!-- <ViewTransitions /> -->
 </head>
-<body class='flex h-full flex-col bg-white 3xl:bg-neutral-dark text-neutral-dark 3xl:max-w-screen-3xl mx-auto' transition:animate="initial">
+<body class='flex h-full sm:min-h-screen flex-col bg-white 3xl:bg-neutral-dark text-neutral-dark 3xl:max-w-screen-3xl mx-auto' transition:animate="initial">
   <Header tab={tab} />
   <main class="w-full min-h-screen bg-white">
 	  <slot />
