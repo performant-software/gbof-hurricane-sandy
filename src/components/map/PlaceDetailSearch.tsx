@@ -24,7 +24,7 @@ const PlaceDetailSearch = (props: PlaceDetailSearchProps) => {
   return (
     <RuntimeConfig
       //@ts-ignore
-      path='/public/config.json'
+      path='/config.json'
       preprocess={PeripleoUtils.normalize}
     >
       <I18nContext.Provider

@@ -23,7 +23,7 @@ const PostContent = (props: PostContentProps) => {
     return (
     <RuntimeConfig
         //@ts-ignore
-        path='/public/config.json'
+        path='/config.json'
         preprocess={PeripleoUtils.normalize}
     >
         <div className="w-full">

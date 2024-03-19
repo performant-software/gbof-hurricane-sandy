@@ -24,7 +24,7 @@ const PathViewer = (props: PathViewerProps) => {
     return (
         <RuntimeConfig
             //@ts-ignore
-            path='/public/config.json'
+            path='/config.json'
             preprocess={PeripleoUtils.normalize}
         >
             <div className="w-full h-screen flex flex-row">
