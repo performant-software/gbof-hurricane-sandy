@@ -45,15 +45,12 @@ const TinaPlacePicker = wrapFieldsWithMeta((props: CustomTinaFieldProps) => {
   };
 
   const onUpdateLayer = (e: any) => {
-    console.log(props.input.value.layer, props.input.value.layer.includes(e.target.value), props.input.value.layer.includes(parseInt(e.target.value)));
-    console.log(props.input.value.layer.filter((layer: any) => parseInt(layer) != parseInt(e.target.value) ));
     const newLayer = !props.input.value?.layer ? [ parseInt(e.target.value) ]
       : props.input.value.layer.includes(parseInt(e.target.value)) ? props.input.value.layer.filter((layer: any) => parseInt(layer) != parseInt(e.target.value) ) : [ ...props.input.value.layer, parseInt(e.target.value) ];
     const newData = {
       ...props.input.value,
       layer: newLayer
     };
-    console.log(newLayer, newData);
     props.input.onChange(newData);
   };
 

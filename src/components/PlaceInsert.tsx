@@ -12,6 +12,7 @@ const PlaceInsert = (props: any) => {
                     layer={props.place?.layer}
                     animate={props.place?.animate}
                     buffer={props.place?.buffer}
+                    mapId={props.place.uuid}
                 />
             </div>
             <div className="text-center text-lg place-tile">{props.title}</div>

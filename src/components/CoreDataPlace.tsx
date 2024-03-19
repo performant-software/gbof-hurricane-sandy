@@ -2,7 +2,7 @@ import { Peripleo, Controls, RuntimeConfig, useRuntimeConfig } from '@peripleo/p
 import { Map, Zoom } from '@peripleo/maplibre';
 import { PlaceMarkers, Peripleo as PeripleoUtils, I18nContext, LayerMenu, OverlayLayers } from '@performant-software/core-data';
 import { translations } from '../helpers/i18n';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import _ from 'underscore';
 
 interface CoreDataPlaceProps {
@@ -19,6 +19,29 @@ const CoreDataPlace = (props: CoreDataPlaceProps) => {
   const [baseLayer, setBaseLayer] = useState(_.first(baseLayers));
   const [overlays, setOverlays] = useState([]);
 
+  useEffect(() => {
+    const getOverlays = async (placeURI: string, layers: number[]) => {
+      const placeData = await fetch(placeURI).then((res) => res.json());
+      if (layers && placeData?.place_layers && placeData.place_layers.length > 0) {
+        setOverlays(placeData.place_layers.filter((layer: any) => layers.includes(layer.id)));
+      }
+    }
+
+    //let's lazily just care about the first place on the list for now
+    if (props?.placeURIs && props.placeURIs.length > 0 && props.layer) {
+      getOverlays(props.placeURIs[0], props.layer);
+    }
+    else {
+      setOverlays([]);
+    }
+  }, [props.layer, props.placeURIs]);
+
+  useEffect(() => {
+    return () => {
+      setOverlays([]);
+    };
+  }, []);
+
   return (
       <I18nContext.Provider
         value={{ translations: translations }}
@@ -27,7 +50,7 @@ const CoreDataPlace = (props: CoreDataPlaceProps) => {
           <Map style={PeripleoUtils.toLayerStyle(baseLayer, baseLayer.name)}>
             <Controls position="topright">
               <Zoom />
-              { baseLayers.length > 1 && (
+              {/* { baseLayers.length > 1 && (
               <LayerMenu
                 baseLayer={baseLayer?.name}
                 baseLayers={baseLayers}
@@ -35,16 +58,17 @@ const CoreDataPlace = (props: CoreDataPlaceProps) => {
                 onChangeBaseLayer={setBaseLayer}
                 onChangeOverlays={setOverlays}
               />
-            )}
+            )} */}
             </Controls>
             <OverlayLayers
               overlays={overlays}
+              key={`overlay-${props.mapId}`}
             />
             <PlaceMarkers
               urls={props.placeURIs}
               buffer={props.buffer}
               animate={props.animate}
-              key={props.mapId}
+              key={`markers-${props.mapId}`}
             />
           </Map>
         </Peripleo>

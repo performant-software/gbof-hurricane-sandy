@@ -135,7 +135,7 @@ export default defineConfig({
                         type: "number"
                       },
                       {
-                        name: "layerID",
+                        name: "layer",
                         label: "Custom Map Layer",
                         type: "number",
                         list: true

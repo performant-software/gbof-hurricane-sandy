@@ -47,6 +47,7 @@ const PathViewer = (props: PathViewerProps) => {
                             placeURIs={[`${import.meta.env.PUBLIC_CORE_DATA_API_URL}/${path.path[current].place.uuid}?project_ids=${import.meta.env.PUBLIC_CORE_DATA_PROJECT_ID}`]}
                             buffer={path.path[current].place?.buffer}
                             animate={path.path[current].place?.animate}
+                            layer={path.path[current].place?.layer}
                             mapId={path.path[current].place.uuid}
                         />
                     ) : path && (

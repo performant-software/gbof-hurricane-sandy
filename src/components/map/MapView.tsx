@@ -6,7 +6,7 @@ import {
   } from '@performant-software/core-data';
   import { Map, Tooltip, Zoom } from '@peripleo/maplibre';
   import { Controls, useRuntimeConfig } from '@peripleo/peripleo';
-  import React, { useState } from 'react';
+  import React, { useEffect, useState } from 'react';
   import _ from 'underscore';
   import SearchResultTooltip from './SearchResultTooltip';
 import { useStats } from 'react-instantsearch';
@@ -27,6 +27,10 @@ import { useStats } from 'react-instantsearch';
     const [overlays, setOverlays] = useState([]);
 
     const { nbHits: count } = useStats();
+
+    useEffect(() => {
+      console.log(overlays)
+    }, [overlays]);
   
     return (
       <Map
