@@ -3,6 +3,7 @@ import React, { useCallback } from 'react';
 import SearchBox from './SearchBox';
 import SearchCount from './SearchCount';
 import SearchResultsList from './SearchResultsList';
+import SearchFilters from './SearchFilters';
 
 const SearchPanel = () => {
   const { hover, setHover } = useHoverState();
@@ -25,7 +26,12 @@ const SearchPanel = () => {
       <div
         className='flex flex-col gap-2 border-b p-5'
       >
-        <SearchBox />
+        <div
+          className='flex gap-2 items-center'
+        >
+          <SearchBox />
+          <SearchFilters />
+        </div>
         <SearchCount
           className='pt-1'
         />

@@ -1,7 +1,7 @@
 import { Map, Zoom } from "@peripleo/maplibre";
 import { Controls, Peripleo } from "@peripleo/peripleo";
 import { useCachedHits } from "@performant-software/core-data";
-import { CoreDataPlace } from "../CoreDataPlace";
+import CoreDataPlace from "../CoreDataPlace";
 
 
 const SearchResultsMap = () => {
@@ -13,7 +13,7 @@ const SearchResultsMap = () => {
     console.log(urls);
     return (
         <CoreDataPlace
-            mapStyle={`https://api.maptiler.com/maps/dataviz/style.json?key=${import.meta.env.PUBLIC_REACT_APP_MAP_TILER_KEY}`}
+            //mapStyle={`https://api.maptiler.com/maps/dataviz/style.json?key=${import.meta.env.PUBLIC_REACT_APP_MAP_TILER_KEY}`}
             placeURIs={urls}
         />
     )

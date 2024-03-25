@@ -1,5 +1,6 @@
 import {
   PersistentSearchStateContextProvider,
+  FacetStateContextProvider,
   Typesense as TypesenseUtils
 } from '@performant-software/core-data';
 import { useRuntimeConfig } from '@peripleo/peripleo';
@@ -8,7 +9,8 @@ import {
   InstantSearch,
   useGeoSearch,
   useInfiniteHits,
-  useSearchBox
+  useSearchBox,
+  useRefinementList
 } from 'react-instantsearch';
 
 const SearchProvider = (props: { children: ReactNode }) => {
@@ -22,7 +24,11 @@ const SearchProvider = (props: { children: ReactNode }) => {
       geoSearch={geoSearch}
       searchBox={searchBox}
     >
-      { props.children }
+      <FacetStateContextProvider
+        useRefinementList={useRefinementList}
+      >
+        { props.children }
+      </FacetStateContextProvider>
     </PersistentSearchStateContextProvider>
   )
 };
