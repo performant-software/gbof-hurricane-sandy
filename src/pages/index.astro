@@ -4,6 +4,8 @@ import Container from '../components/Container.astro';
 import Hero from '../components/Hero.astro';
 import client from '../../tina/__generated__/client';
 import { TinaMarkdown } from 'tinacms/dist/rich-text';
+import Footer from '../components/Footer.astro';
+import PostCard from '../components/PostCard.astro';
 
 const projectResponse = await client.request({
   query: `query getAbout($relativePath: String!) {
@@ -25,10 +27,23 @@ const { title, subheader, description } = projectResponse.data.about;
     title={title}
     subheader={subheader}
   />
-  <Container className="my-12">
-    <h2 class="text-2x">About the Project</h2>
-    <p class="py-12 prose max-w-none">
-      <TinaMarkdown content={description} />
-    </p>
+  <Container className="my-12 grid lg:grid-cols-2 gap-16">
+    <div>
+      <h2 class="text-5xl font-serif ">About the Project</h2>
+      <p class="py-8 prose max-w-none">
+        <TinaMarkdown content={description} />
+      </p>
+    </div>
+    <div class="w-full h-[400px] bg-neutral-dark/30" />
   </Container>
+  <Container className="flex flex-col gap-12 pb-16">
+    <div class="bg-neutral-dark h-[2px] w-full my-6" />
+    <h2 class="text-5xl font-serif">Featured Work</h2>
+    <div class="w-full grid grid-cols-3 gap-12">
+      <PostCard title="My Journey" imageUrl='/src/assets/paths/path_thumbnail.png' slug="/paths/My-journey" />
+      <PostCard title="My Journey" imageUrl='/src/assets/paths/path_thumbnail.png' slug="/paths/My-journey" />
+      <PostCard title="My Journey" imageUrl='/src/assets/paths/path_thumbnail.png' slug="/paths/My-journey" />
+    </div>
+  </Container>
+  <Footer />
 </Layout>
