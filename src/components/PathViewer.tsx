@@ -5,7 +5,7 @@ import { Controls, Peripleo, RuntimeConfig } from "@peripleo/peripleo";
 import { Map, Zoom } from "@peripleo/maplibre";
 import { Peripleo as PeripleoUtils } from "@performant-software/core-data";
 import CoreDataPlace from "./CoreDataPlace";
-import { ArrowLeftCircleIcon, ArrowRightCircleIcon, ArrowUturnLeftIcon } from "@heroicons/react/24/outline";
+import { ArrowLeftCircleIcon, ArrowRightCircleIcon, ArrowRightIcon, ArrowUturnLeftIcon } from "@heroicons/react/24/outline";
 
 export interface PathViewerProps {
     slug: string;
@@ -30,9 +30,9 @@ const PathViewer = (props: PathViewerProps) => {
         >
             <div className="w-full h-screen flex flex-row relative">
                 { path && <div className="absolute bottom-[15%] left-[50%] -translate-x-1/2 mx-auto w-48 h-16 rounded-full bg-white z-[999] drop-shadow-xl flex justify-around items-center hover:scale-110 transition">
-                    <ArrowUturnLeftIcon className={`${current < 0 ? 'text-gray-500 cursor-default' : 'cursor-pointer'} h-8 w-8`} onClick={() => setCurrent(-1)} />
-                    <ArrowLeftCircleIcon className={`${current == 0 ? 'text-gray-500 cursor-default' : 'cursor-pointer'} h-8 w-8`} onClick={() => current > 0 && setCurrent((i) => i - 1)} />
-                    <ArrowRightCircleIcon className={`${current == path.path.length - 1 ? 'text-gray-500 cursor-default' : 'cursor-pointer'} h-8 w-8`} onClick={() => current < path.path.length - 1 && setCurrent((i) => i + 1)} />
+                    <ArrowUturnLeftIcon className={`${current < 0 ? 'text-gray-500 cursor-default' : 'cursor-pointer hover:scale-105 transition'} h-8 w-8`} onClick={() => setCurrent(-1)} />
+                    <ArrowLeftCircleIcon className={`${current == 0 ? 'text-gray-500 cursor-default' : 'cursor-pointer hover:scale-105 transition'} h-8 w-8`} onClick={() => current > 0 && setCurrent((i) => i - 1)} />
+                    <ArrowRightCircleIcon className={`${current == path.path.length - 1 ? 'text-gray-500 cursor-default' : 'cursor-pointer hover:scale-105 transition'} h-8 w-8`} onClick={() => current < path.path.length - 1 && setCurrent((i) => i + 1)} />
                 </div> }
                 <div className="h-full w-1/2">
                     {path && current >= 0 ? (
@@ -56,19 +56,17 @@ const PathViewer = (props: PathViewerProps) => {
                         <div className="flex flex-col py-16 px-12 gap-16">
                             {current >= 0 ? (
                                 <>
-                                    <div onClick={() => setCurrent(-1)} className="cursor-pointer">Back to Beginning</div>
                                     <h2 className="text-3xl">{path.path[current].place.title}</h2>
-                                    <article className="prose prose-invert"><TinaMarkdown content={path.path[current].blurb} /></article>
-                                    <div className="flex flex-row pt-16 w-full justify-between py-16">
-                                        <div onClick={() => current > 0 && setCurrent((i) => i - 1)} className={current == 0 ? 'text-gray-500 cursor-default' : 'cursor-pointer'}>Previous</div>
-                                        <div onClick={() => current < path.path.length - 1 && setCurrent((i) => i + 1)} className={current == path.path.length - 1 ? 'text-gray-500 cursor-default' : 'cursor-pointer'}>Next</div>
-                                    </div>
+                                    <article className="prose prose-invert max-w-none"><TinaMarkdown content={path.path[current].blurb} /></article>
                                 </>
                             ) : (
                                 <>
                                     <h2 className="text-3xl">{path.title}</h2>
-                                    <article className="prose prose-xl prose-invert"><TinaMarkdown content={path.description} /></article>
-                                    <div className="cursor-pointer" onClick={() => setCurrent(0)}>Begin Path</div>
+                                    <article className="prose prose-xl prose-invert max-w-none"><TinaMarkdown content={path.description} /></article>
+                                    <div className="cursor-pointer bg-white text-neutral-dark w-48 h-16 flex justify-between items-center hover:scale-105 rounded-full px-6" onClick={() => setCurrent(0)}>
+                                        <p>Start the Tour</p>
+                                        <ArrowRightIcon className="h-8 w-8" />
+                                    </div>
                                 </>
                             )}
                         </div>
