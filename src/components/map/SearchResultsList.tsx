@@ -1,4 +1,4 @@
-import { type Feature } from '@peripleo/peripleo';
+import { type Feature, useNavigate } from '@peripleo/peripleo';
 import { Typesense as TypesenseUtils, useCachedHits } from '@performant-software/core-data';
 import { Building } from 'lucide-react';
 import { useCallback, useMemo } from 'react';
@@ -60,7 +60,6 @@ const HitComponent = (props: HitComponentProps) => {
 interface Props {
   hover?: Feature<{ id: string }>;
   onHoverChange?(hover?: Feature<{ id: string }>): void;
-  onClick: (_hit: any) => void;
 }
 
 interface RowProps {
@@ -69,8 +68,10 @@ interface RowProps {
 }
 
 const SearchResultsList = (props: Props) => {
-  const { hover, onHoverChange, onClick } = props;
+  const { hover, onHoverChange } = props;
   const hits = useCachedHits();
+
+  const navigate = useNavigate();
 
   const Row = ({ index, style }: RowProps) => {
     const hit = hits[index];
@@ -97,7 +98,7 @@ const SearchResultsList = (props: Props) => {
         <HitComponent
           hit={hit}
           isHovered={hover?.id === parseInt(hit?.record_id)}
-          onClick={() => onClick(hit)}
+          onClick={() => navigate(`/places/${hit.uuid}`)}
         />
       </div>
     )

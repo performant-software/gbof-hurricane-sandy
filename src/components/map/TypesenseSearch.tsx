@@ -36,8 +36,8 @@ const SearchProvider = (props: { children: ReactNode }) => {
 const TypesenseSearch = (props: { children: ReactNode }) => {
   const config = useRuntimeConfig<any>();
 
-  const adapter = useMemo(() => TypesenseUtils.createTypesenseAdapter(config), []);
-  const routing = useMemo(() => TypesenseUtils.createRouting(config), []);
+  const adapter = useMemo(() => TypesenseUtils.createTypesenseAdapter(config.typesense), []);
+  const routing = useMemo(() => TypesenseUtils.createRouting(config.typesense), []);
 
   return (
     <InstantSearch

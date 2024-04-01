@@ -15,10 +15,6 @@ const SearchPanel = () => {
     setHover((prevHover) => (prevHover?.id === nextHover?.id ? prevHover : nextHover))
   ), []);
 
-  const onClick = (hit: any) => {
-    window.location.href = `/map/${hit.uuid}`;
-  };
-
   return (
     <aside
       className='flex flex-col absolute z-10 h-full w-[350px] bg-white shadow overflow-hidden'
@@ -42,7 +38,6 @@ const SearchPanel = () => {
         <SearchResultsList
           hover={hover}
           onHoverChange={onHoverChange}
-          onClick={onClick}
         />
       </div>
     </aside>

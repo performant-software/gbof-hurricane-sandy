@@ -2,13 +2,14 @@ import {
     LayerMenu,
     OverlayLayers,
     Peripleo as PeripleoUtils,
-    SearchResultsLayer
+    SearchResultsLayer,
+    useGeoSearch
   } from '@performant-software/core-data';
-  import { Map, Tooltip, Zoom } from '@peripleo/maplibre';
-  import { Controls, useRuntimeConfig } from '@peripleo/peripleo';
-  import React, { useEffect, useState } from 'react';
-  import _ from 'underscore';
-  import SearchResultTooltip from './SearchResultTooltip';
+import { Map, Tooltip, Zoom } from '@peripleo/maplibre';
+import { Controls, useRuntimeConfig, useNavigate, useSelectionValue } from '@peripleo/peripleo';
+import React, { useEffect, useState } from 'react';
+import _ from 'underscore';
+import SearchResultTooltip from './SearchResultTooltip';
 import { useStats } from 'react-instantsearch';
   
   const SEARCH_LAYER = 'search-results';
@@ -26,11 +27,21 @@ import { useStats } from 'react-instantsearch';
     const [baseLayer, setBaseLayer] = useState(_.first(baseLayers));
     const [overlays, setOverlays] = useState([]);
 
+    const { isRefinedWithMap } = useGeoSearch();
+
+    const navigate = useNavigate();
+    const selected = useSelectionValue<any>();
+
     const { nbHits: count } = useStats();
 
+    /**
+     * Navigates to the selected marker.
+     */
     useEffect(() => {
-      console.log(overlays)
-    }, [overlays]);
+      if (selected) {
+        navigate(`/places/${selected.properties.uuid}`);
+      }
+    }, [selected]);
   
     return (
       <Map
@@ -54,9 +65,19 @@ import { useStats } from 'react-instantsearch';
         <OverlayLayers
           overlays={overlays}
         />
-        { count > 0 && <SearchResultsLayer
+        <SearchResultsLayer
+          boundingBoxOptions={{
+            padding: {
+              top: 100,
+              bottom: 100,
+              left: 380,
+              right: 120
+            },
+            maxZoom: 14
+          }}
+          fitBoundingBox={!isRefinedWithMap()}
           layerId={SEARCH_LAYER}
-        /> }
+        />
         <Tooltip
           content={(target, event) => (
             <SearchResultTooltip

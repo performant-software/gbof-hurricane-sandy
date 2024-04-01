@@ -1,9 +1,9 @@
 import { I18nContext, Peripleo as PeripleoUtils } from '@performant-software/core-data';
-import { Peripleo, RuntimeConfig } from '@peripleo/peripleo';
-import SearchPanel from './SearchPanel';
+import { Peripleo, Router, RuntimeConfig } from '@peripleo/peripleo';
 import TypesenseSearch from './TypesenseSearch';
 import MapView from './MapView';
 import { translations } from '../../helpers/i18n';
+import SearchRoutes from './SearchRoutes';
 
 const Search = () => {
   return (
@@ -12,16 +12,18 @@ const Search = () => {
       path='/config.json'
       preprocess={PeripleoUtils.normalize}
     >
-      <I18nContext.Provider
-        value={{ translations: translations }}
-      >
+      <Router>
         <Peripleo>
-          <TypesenseSearch>
-            <SearchPanel />
-            <MapView />
-          </TypesenseSearch>
+        <I18nContext.Provider
+          value={{ translations: translations }}
+        >
+            <TypesenseSearch>
+              <SearchRoutes />
+              <MapView />
+            </TypesenseSearch>
+          </I18nContext.Provider>
         </Peripleo>
-      </I18nContext.Provider>
+      </Router>
     </RuntimeConfig>
   );
 };
