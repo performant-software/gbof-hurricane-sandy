@@ -1,18 +1,16 @@
 ---
 import Container from "../../components/Container.astro";
 import Layout from "../../layouts/Layout.astro";
-import Search from '../../components/Search';
+import Search from '../../components/map/Search';
 import MapSearch from '../../components/Search/MapSearch';
+
+const viewDetails = (hit: any) => {
+  console.log(hit.uuid);
+  Astro.redirect(`/map/${hit.uuid}`)
+};
+console.log(viewDetails);
 ---
 
-<Layout title="Map" tab="Map">
-        <!-- <Container>
-            <h1 class="text-3xl my-12">Map</h1>
-            <div class="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-              A map-based search view will go here soon. For now, enjoy this painfully minimal search component that I used to test the search index.
-            </div>
-            <Search locale="en" client:only="react" />
-        </Container> -->
-        <MapSearch placeId="1179cb57-61d5-4de3-b9ba-636d6b69eecd" client:only />
-        <!-- obviously this will not be hardcoded eventually lol -->
+<Layout title="Map" tab="Map" map>
+  <Search client:only="react" />
 </Layout>

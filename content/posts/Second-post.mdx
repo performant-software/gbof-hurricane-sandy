@@ -8,8 +8,36 @@ Here are some more places:
 <place
   place={{
     uuid: "18c644bc-6e7a-40d8-bb72-5dd53d21e3b4",
-    title: "Behr and Kahl booksellers and publishers"
+    title: "Behr and Kahl booksellers and publishers",
+    animate: false
   }}
   title="booksellers"
   caption="books!!!"
+/>
+
+This is a place with a custom layer!!!
+
+<place
+  title="A Custom Layer"
+  place={{
+    uuid: "1179cb57-61d5-4de3-b9ba-636d6b69eecd",
+    title: "Ambas Américas: Revista de Educación, Bibliografía y Agricultura",
+    animate: true,
+    buffer: null,
+    layer: [10]
+  }}
+/>
+
+And here's a copy of the same place without the custom layer selected.
+
+<place
+  title="No layer"
+  place={{
+    uuid: "1179cb57-61d5-4de3-b9ba-636d6b69eecd",
+    title: "Ambas Américas: Revista de Educación, Bibliografía y Agricultura",
+    buffer: null,
+    animate: true,
+    layer: []
+  }}
+  caption="No layer :-("
 />

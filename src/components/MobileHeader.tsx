@@ -37,8 +37,9 @@ const MobileHeader = (props: MobileHeaderProps) => {
             <Disclosure.Panel className="md:hidden bg-white">
               <div className="space-y-1 pb-3 pt-2">
                 {/* Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" */}
-                {props.sections.map((sect) => (
+                {props.sections.map((sect, idx) => (
                   <Disclosure.Button
+                    key={idx}
                     as="a"
                     href={`/${sect.toLowerCase()}`}
                     className="block bg-white hover:bg-orange-primary/10 py-4 text-base text-center font-bold"

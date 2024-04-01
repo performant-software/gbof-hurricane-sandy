@@ -1,130 +1,81 @@
+import { Peripleo, Controls, RuntimeConfig, useRuntimeConfig } from '@peripleo/peripleo';
+import { Map, Zoom } from '@peripleo/maplibre';
+import { PlaceMarkers, Peripleo as PeripleoUtils, I18nContext, LayerMenu, OverlayLayers } from '@performant-software/core-data';
+import { translations } from '../helpers/i18n';
 import { useEffect, useState } from 'react';
-import type { FeatureCollection } from '@peripleo/peripleo';
-import { Peripleo, Controls } from '@peripleo/peripleo';
-import { Map, MixedGeoJSONLayer, PulsingMarkerLayer, Zoom, useMap } from '@peripleo/maplibre';
-import { PlaceMarker } from '@performant-software/core-data';
+import _ from 'underscore';
 
 interface CoreDataPlaceProps {
-  mapStyle: string | object;
-  placeURI: string;
-  fillStyle?: object;
-  pointStyle?: object;
-  strokeStyle?: object;
-  defaultZoom?: number;
-  fly?: boolean;
+  placeURIs: string[];
+  animate?: boolean;
+  buffer?: number;
+  layer?: number[];
+  mapId?: string;
 };
 
-export const DEFAULT_POINT_STYLE = {
-  'type': 'circle',
-  'paint': {
-    'circle-radius': [
-      'interpolate', 
-      ['linear'],
-      ['number', ['get','point_count'], 1 ],
-      0, 4, 
-      10, 14
-    ],
-    'circle-stroke-width': 1,
-    'circle-color': [
-      'case',
-      ['boolean', ['feature-state', 'hover'], false],
-      '#3b62ff',
-      '#ff623b'
-    ],
-    'circle-stroke-color': '#8d260c'
-  }
-};
-
-export const DEFAULT_FILL_STYLE = {
-  'type': 'fill',
-  'paint': {
-    'fill-color': '#ff623b',
-    'fill-opacity': 0.2
-  }
-}
-
-export const DEFAULT_STROKE_STYLE = {
-  'type': 'line',
-  'paint': {
-    'line-color': '#ff623b',
-    'line-opacity': 0.6
-  }
-}
-
-export const CoreDataPlace = (props: CoreDataPlaceProps) => {
-
-  return (
-    <Peripleo>
-      <Map style={props.mapStyle}>
-        <Controls position="topright">
-          <Zoom />
-        </Controls>
-      {/* 
-        <CoreDataPlaceLayer 
-          uri={props.placeURI} 
-          fillStyle={props.fillStyle}
-          pointStyle={props.pointStyle}
-          strokeStyle={props.strokeStyle}
-          defaultZoom={props.defaultZoom} 
-          fly={props.fly} /> */}
-        <PlaceMarker
-          url={props.placeURI}
-        />
-      </Map>
-    </Peripleo>
-  )
-
-};
-
-interface CoreDataPlaceLayerProps {
-  uri: string;
-  fillStyle?: object;
-  pointStyle?: object;
-  strokeStyle?: object;
-  defaultZoom?: number;
-  fly?: boolean;
-};
-
-export const CoreDataPlaceLayer = (props: CoreDataPlaceLayerProps) => {
-
-  const [place, setPlace] = useState<FeatureCollection | undefined>(undefined);
-
-  const map = useMap();
+const CoreDataPlace = (props: CoreDataPlaceProps) => {
+  const { baseLayers, dataLayers } = PeripleoUtils.filterLayers(useRuntimeConfig());
+  
+  const [baseLayer, setBaseLayer] = useState(_.first(baseLayers));
+  const [overlays, setOverlays] = useState([]);
 
   useEffect(() => {
-    fetch(props.uri)
-      .then(res => res.json())
-      .then(data => {
-        const placeData = {
-          ...data,
-          properties: {
-            ...data.properties,
-            record_id: data.record_id
-          }
-        };
+    const getOverlays = async (placeURI: string, layers: number[]) => {
+      const placeData = await fetch(placeURI).then((res) => res.json());
+      if (layers && placeData?.place_layers && placeData.place_layers.length > 0) {
+        setOverlays(placeData.place_layers.filter((layer: any) => layers.includes(layer.id)));
+      }
+    }
 
-        setPlace({
-          type: 'FeatureCollection',
-          features: [placeData]
-        });
+    //let's lazily just care about the first place on the list for now
+    if (props?.placeURIs && props.placeURIs.length > 0 && props.layer) {
+      getOverlays(props.placeURIs[0], props.layer);
+    }
+    else {
+      setOverlays([]);
+    }
+  }, [props.layer, props.placeURIs]);
 
-        placeData?.geometry?.coordinates && props?.fly ? map.flyTo({ center: placeData.geometry.coordinates, zoom: props.defaultZoom || 12 }) : map.jumpTo({ center: placeData.geometry.coordinates, zoom: props.defaultZoom || 12 });
-      });
-  }, [props.uri])
+  useEffect(() => {
+    return () => {
+      setOverlays([]);
+    };
+  }, []);
 
-  return place && (
-    <>
-      <PulsingMarkerLayer 
-        id="current" 
-        data={place} />
-
-      <MixedGeoJSONLayer
-        id={props.uri} 
-        data={place} 
-        fillStyle={props.fillStyle || DEFAULT_FILL_STYLE} 
-        strokeStyle={props.strokeStyle || DEFAULT_STROKE_STYLE} 
-        pointStyle={props.pointStyle || DEFAULT_POINT_STYLE} />
-    </>
+  return (
+      <I18nContext.Provider
+        value={{ translations: translations }}
+      >
+        <Peripleo>
+          <Map style={PeripleoUtils.toLayerStyle(baseLayer, baseLayer.name)}>
+            <Controls position="topright">
+              <Zoom />
+              {/* { baseLayers.length > 1 && (
+              <LayerMenu
+                baseLayer={baseLayer?.name}
+                baseLayers={baseLayers}
+                dataLayers={dataLayers}
+                onChangeBaseLayer={setBaseLayer}
+                onChangeOverlays={setOverlays}
+              />
+            )} */}
+            </Controls>
+            <OverlayLayers
+              overlays={overlays}
+              key={`overlay-${props.mapId}`}
+            />
+            <PlaceMarkers
+              urls={props.placeURIs}
+              buffer={props.buffer}
+              animate={props.animate}
+              key={`markers-${props.mapId}`}
+            />
+          </Map>
+        </Peripleo>
+      </I18nContext.Provider>
   )
 
 };
+
+export default CoreDataPlace;
+

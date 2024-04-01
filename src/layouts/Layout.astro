@@ -4,13 +4,15 @@ import Header from '../components/Header.astro';
 import '@peripleo/maplibre/peripleo-maplibre.css';
 import '@peripleo/peripleo/default-theme';
 import '@performant-software/core-data/style.css';
+import '../styles/index.css';
 
 export interface Props {
 	title: string;
   	tab?: string;
+	map?: boolean;
 }
 
-const { title, tab } = Astro.props as Props;
+const { title, tab, map = false } = Astro.props as Props;
 ---
 
 <!DOCTYPE html>
@@ -20,11 +22,11 @@ const { title, tab } = Astro.props as Props;
 	<meta name="viewport" content="width=device-width">
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 	<title>{title}</title>
-  <ViewTransitions />
+  <!-- <ViewTransitions /> -->
 </head>
-<body class='flex h-full flex-col bg-white 3xl:bg-neutral-dark text-neutral-dark 3xl:max-w-screen-3xl mx-auto' transition:animate="initial">
-  <Header tab={tab} />
-  <main class="w-full min-h-screen bg-white">
+<body class={`flex h-full sm:min-h-screen flex-col bg-white ${ !map && '3xl:bg-neutral-dark 3xl:max-w-screen-3xl'} text-neutral-dark mx-auto`} transition:animate="initial">
+  <Header tab={tab} map={map} />
+  <main class={`w-full min-h-screen bg-white ${map && 'flex'}`}>
 	  <slot />
   </main>
 </body>

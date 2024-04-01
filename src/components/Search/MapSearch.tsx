@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { PlaceDetailsPanel } from "@performant-software/core-data";
-import { CoreDataPlace } from "../CoreDataPlace";
+import CoreDataPlace from "../CoreDataPlace";
 import PlaceDetail from "../PlaceDetail";
 
 export interface MapSearchProps {
@@ -19,8 +19,8 @@ const MapSearch = (props: MapSearchProps) => {
             </div>
             <div className="w-3/4 h-full">
                 <CoreDataPlace
-                    mapStyle={`https://api.maptiler.com/maps/dataviz/style.json?key=${import.meta.env.PUBLIC_REACT_APP_MAP_TILER_KEY}`}
-                    placeURI={`${import.meta.env.PUBLIC_CORE_DATA_API_URL}/${props.placeId}?project_ids=${import.meta.env.PUBLIC_CORE_DATA_PROJECT_ID}`}
+                    // mapStyle={`https://api.maptiler.com/maps/dataviz/style.json?key=${import.meta.env.PUBLIC_REACT_APP_MAP_TILER_KEY}`}
+                    placeURIs={[`${import.meta.env.PUBLIC_CORE_DATA_API_URL}/${props.placeId}?project_ids=${import.meta.env.PUBLIC_CORE_DATA_PROJECT_ID}`]}
                 />        
             </div>
         </div>

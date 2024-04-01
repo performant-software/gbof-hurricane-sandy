@@ -6,10 +6,14 @@ import PathViewer from "../../components/PathViewer";
 
 const { slug } = Astro.params;
 
-const path = await client.queries.path({ relativePath: `${slug}.mdx`});
+const pathsResponse = await client.queries.pathConnection();
+
+const pathSlugs = pathsResponse.data.pathConnection.edges.map((path) => path.node._sys.filename);
+
+const path = pathSlugs.includes(slug) && await client.queries.path({ relativePath: `${slug}.mdx`});
 
 ---
 
-<Layout title={path.data.path.title} tab="Paths">
-    <PathViewer slug={slug} client:only />
+<Layout title={path ? path.data.path.title : 'Paths'} tab="Paths">
+    { path && <PathViewer slug={slug} client:only /> }
 </Layout>
