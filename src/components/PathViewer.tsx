@@ -5,6 +5,7 @@ import { Controls, Peripleo, RuntimeConfig } from "@peripleo/peripleo";
 import { Map, Zoom } from "@peripleo/maplibre";
 import { Peripleo as PeripleoUtils } from "@performant-software/core-data";
 import CoreDataPlace from "./CoreDataPlace";
+import { ArrowLeftCircleIcon, ArrowRightCircleIcon, ArrowRightIcon, ArrowUturnLeftIcon } from "@heroicons/react/24/outline";
 
 export interface PathViewerProps {
     slug: string;
@@ -27,22 +28,14 @@ const PathViewer = (props: PathViewerProps) => {
             path='/config.json'
             preprocess={PeripleoUtils.normalize}
         >
-            <div className="w-full h-screen flex flex-row">
+            <div className="w-full h-screen flex flex-row relative">
+                { path && <div className="absolute bottom-[15%] left-[50%] -translate-x-1/2 mx-auto w-48 h-16 rounded-full bg-white z-[999] drop-shadow-xl flex justify-around items-center hover:scale-110 transition">
+                    <ArrowUturnLeftIcon className={`${current < 0 ? 'text-gray-500 cursor-default' : 'cursor-pointer hover:scale-105 transition'} h-8 w-8`} onClick={() => setCurrent(-1)} />
+                    <ArrowLeftCircleIcon className={`${current == 0 ? 'text-gray-500 cursor-default' : 'cursor-pointer hover:scale-105 transition'} h-8 w-8`} onClick={() => current > 0 && setCurrent((i) => i - 1)} />
+                    <ArrowRightCircleIcon className={`${current == path.path.length - 1 ? 'text-gray-500 cursor-default' : 'cursor-pointer hover:scale-105 transition'} h-8 w-8`} onClick={() => current < path.path.length - 1 && setCurrent((i) => i + 1)} />
+                </div> }
                 <div className="h-full w-1/2">
                     {path && current >= 0 ? (
-                        // <Peripleo>
-                        //     <Map style={`https://api.maptiler.com/maps/dataviz/style.json?key=${import.meta.env.PUBLIC_REACT_APP_MAP_TILER_KEY}`}>
-                        //         <Controls position="topright">
-                        //             <Zoom />
-                        //         </Controls>
-                        //         <PlaceMarkers
-                        //             urls={[`${import.meta.env.PUBLIC_CORE_DATA_API_URL}/${path.path[current].place.uuid}?project_ids=${import.meta.env.PUBLIC_CORE_DATA_PROJECT_ID}`]}
-                        //             buffer={path.path[current].place?.buffer}
-                        //             animate={path.path[current].place?.animate}
-                        //             key={path.path[current].place.uuid}
-                        //         />
-                        //     </Map>
-                        // </Peripleo>
                         <CoreDataPlace
                             placeURIs={[`${import.meta.env.PUBLIC_CORE_DATA_API_URL}/${path.path[current].place.uuid}?project_ids=${import.meta.env.PUBLIC_CORE_DATA_PROJECT_ID}`]}
                             buffer={path.path[current].place?.buffer}
@@ -51,18 +44,6 @@ const PathViewer = (props: PathViewerProps) => {
                             mapId={path.path[current].place.uuid}
                         />
                     ) : path && (
-                        // <Peripleo>
-                        //     <Map style={`https://api.maptiler.com/maps/dataviz/style.json?key=${import.meta.env.PUBLIC_REACT_APP_MAP_TILER_KEY}`}>
-                        //         <Controls position="topright">
-                        //             <Zoom />
-                        //         </Controls>
-                        //         <PlaceMarkers
-                        //             urls={path.path.map((current) => `${import.meta.env.PUBLIC_CORE_DATA_API_URL}/${current.place.uuid}?project_ids=${import.meta.env.PUBLIC_CORE_DATA_PROJECT_ID}`)}
-                        //             animate={false}
-                        //             key='cover'
-                        //         />
-                        //     </Map>
-                        // </Peripleo>
                         <CoreDataPlace
                             placeURIs={path.path.map((current) => `${import.meta.env.PUBLIC_CORE_DATA_API_URL}/${current.place.uuid}?project_ids=${import.meta.env.PUBLIC_CORE_DATA_PROJECT_ID}`)}
                             animate={false}
@@ -70,24 +51,22 @@ const PathViewer = (props: PathViewerProps) => {
                         />
                     )}
                 </div>
-                <div className="h-full w-1/2 overflow-y-scroll">
+                <div className="h-full w-1/2 overflow-y-scroll bg-neutral-dark text-white">
                     {path && (
                         <div className="flex flex-col py-16 px-12 gap-16">
                             {current >= 0 ? (
                                 <>
-                                    <div onClick={() => setCurrent(-1)} className="cursor-pointer">Back to Beginning</div>
                                     <h2 className="text-3xl">{path.path[current].place.title}</h2>
-                                    <article className="prose"><TinaMarkdown content={path.path[current].blurb} /></article>
-                                    <div className="flex flex-row pt-16 w-full justify-between py-16">
-                                        <div onClick={() => current > 0 && setCurrent((i) => i - 1)} className={current == 0 ? 'text-gray-500 cursor-default' : 'cursor-pointer'}>Previous</div>
-                                        <div onClick={() => current < path.path.length - 1 && setCurrent((i) => i + 1)} className={current == path.path.length - 1 ? 'text-gray-500 cursor-default' : 'cursor-pointer'}>Next</div>
-                                    </div>
+                                    <article className="prose prose-invert max-w-none"><TinaMarkdown content={path.path[current].blurb} /></article>
                                 </>
                             ) : (
                                 <>
                                     <h2 className="text-3xl">{path.title}</h2>
-                                    <article className="prose prose-xl"><TinaMarkdown content={path.description} /></article>
-                                    <div className="cursor-pointer" onClick={() => setCurrent(0)}>Begin Path</div>
+                                    <article className="prose prose-xl prose-invert max-w-none"><TinaMarkdown content={path.description} /></article>
+                                    <div className="cursor-pointer bg-white text-neutral-dark w-48 h-16 flex justify-between items-center hover:scale-105 rounded-full px-6" onClick={() => setCurrent(0)}>
+                                        <p>Start the Tour</p>
+                                        <ArrowRightIcon className="h-8 w-8" />
+                                    </div>
                                 </>
                             )}
                         </div>

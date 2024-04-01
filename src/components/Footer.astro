@@ -1,0 +1,27 @@
+---
+import Container from "./Container.astro";
+import { Image } from "astro:assets";
+
+---
+
+<div class="bg-white w-full">
+    <Container className="flex flex-col gap-8 py-12 items-center">
+        <div class="flex flex-col md:flex-row gap-6 align-middle justify-center items-center">
+            <div class="w-20 h-20 rounded-full bg-blue-600" />
+            <p class="text-5xl font-serif self-center">Name</p>
+        </div>
+        <p class="text-center">
+            Lorem ipsum dolor sit amet consectetur. Eros quis faucibus magna vestibulum massa ac dolor.
+        </p>
+        <div class="flex flex-row justify-center gap-6 object-contain">
+            <div class="w-10 h-10 bg-blue-600 rounded-full" />
+            <div class="w-10 h-10 bg-blue-600 rounded-full" />
+            <div class="w-10 h-10 bg-blue-600 rounded-full" />
+            <div class="w-10 h-10 bg-blue-600 rounded-full" />
+        </div>
+        <div class="h-[2px] bg-neutral-dark rounded-full w-full" />
+        <p class="text-center text-sm">
+            &copy; 2024 Lorem Ipsum Inc, all rights reserved etc
+        </p>
+    </Container>
+</div>
