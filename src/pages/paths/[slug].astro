@@ -14,6 +14,6 @@ const path = pathSlugs.includes(slug) && await client.queries.path({ relativePat
 
 ---
 
-<Layout title={path ? path.data.path.title : 'Paths'} tab="Paths">
+<Layout title={path ? path.data.path.title : 'Paths'} tab="Paths" map>
     { path && <PathViewer slug={slug} client:only /> }
 </Layout>
