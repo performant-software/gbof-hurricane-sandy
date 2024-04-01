@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { PlaceDetails } from "@performant-software/core-data";
 
 export interface PlaceDetailProps {
     placeId: string;
@@ -53,6 +54,11 @@ const PlaceDetail = (props: PlaceDetailProps) => {
 
     return (
         <>
+            { place ? <PlaceDetails
+                place={place}
+                related={[ relatedPeople, orgs, relatedPlaces, relatedMedia ].filter((cat) => cat.data.items.length > 0)}
+                onClose={props.onClose}
+            /> : <p className="p-6">Loading place info...</p> }
         </>
     )
 };
