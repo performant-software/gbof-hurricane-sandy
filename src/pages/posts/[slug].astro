@@ -13,7 +13,7 @@ const { slug } = Astro.params;
 ---
 
 <Layout title={slug} tab="Posts">
-  <Container>
+  <Container className="pb-16">
     <PostContent slug={slug} client:only />
   </Container>
   <PlaceDetailModal client:only />
