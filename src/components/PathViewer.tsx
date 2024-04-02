@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import client from "../../tina/__generated__/client";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import { Controls, Peripleo, RuntimeConfig } from "@peripleo/peripleo";
@@ -16,11 +16,21 @@ const PathViewer = (props: PathViewerProps) => {
     const [path, setPath] = useState<any | undefined>(undefined);
     const [current, setCurrent] = useState(-1);
 
+    const contentDiv = useRef(null);
+
     useEffect(() => {
         client.queries.path({ relativePath: `${props.slug}.mdx` }).then((path) => {
             setPath(path.data.path);
         });
     }, []);
+
+    useEffect(() => {
+        contentDiv && contentDiv.current && setTimeout(() => {
+            contentDiv.current.scroll({
+            top: 0,
+            behavior: 'smooth'
+        })}, 50);
+    }, [current]);
 
     return (
         <RuntimeConfig
@@ -51,7 +61,7 @@ const PathViewer = (props: PathViewerProps) => {
                         />
                     )}
                 </div>
-                <div className="h-full w-1/2 overflow-y-scroll bg-neutral-dark text-white">
+                <div className="h-full w-1/2 overflow-y-scroll bg-neutral-dark text-white pb-[20dvh]" ref={contentDiv}>
                     {path && (
                         <div className="flex flex-col py-16 px-12 gap-16">
                             {current >= 0 ? (
