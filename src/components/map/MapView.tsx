@@ -6,8 +6,8 @@ import {
     useGeoSearch
   } from '@performant-software/core-data';
 import { Map, Tooltip, Zoom } from '@peripleo/maplibre';
-import { Controls, useRuntimeConfig, useNavigate, useSelectionValue } from '@peripleo/peripleo';
-import React, { useEffect, useState } from 'react';
+import { Controls, useCurrentRoute, useRuntimeConfig, useNavigate, useSelectionValue } from '@peripleo/peripleo';
+import React, { useEffect, useMemo, useState } from 'react';
 import _ from 'underscore';
 import SearchResultTooltip from './SearchResultTooltip';
 import { useStats } from 'react-instantsearch';
@@ -31,8 +31,15 @@ import { useStats } from 'react-instantsearch';
 
     const navigate = useNavigate();
     const selected = useSelectionValue<any>();
+    const route = useCurrentRoute();
 
     const { nbHits: count } = useStats();
+
+      /**
+     * If we're on the place detail page or refining results by the map view port, we'll suppress the auto-bounding box
+     * on the SearchResultsLayer component.
+     */
+    const fitBoundingBox = useMemo(() => !isRefinedWithMap() && route === '/', [route, isRefinedWithMap()]);
 
     /**
      * Navigates to the selected marker.
@@ -53,13 +60,15 @@ import { useStats } from 'react-instantsearch';
         >
           <Zoom />
           { baseLayers.length > 1 && (
-            <LayerMenu
-              baseLayer={baseLayer?.name}
-              baseLayers={baseLayers}
-              dataLayers={dataLayers}
-              onChangeBaseLayer={setBaseLayer}
-              onChangeOverlays={setOverlays}
-            />
+          <LayerMenu
+            baseLayer={baseLayer?.name}
+            baseLayers={baseLayers}
+            baseLayersLabel={'Base Layers'}
+            dataLayers={dataLayers}
+            onChangeBaseLayer={setBaseLayer}
+            onChangeOverlays={setOverlays}
+            overlaysLabel={'Overlays'}
+          />
           )}
         </Controls>
         <OverlayLayers
@@ -73,9 +82,10 @@ import { useStats } from 'react-instantsearch';
               left: 380,
               right: 120
             },
-            maxZoom: 14
+            maxZoom: 14,
+            zoom: 14
           }}
-          fitBoundingBox={!isRefinedWithMap()}
+          fitBoundingBox={fitBoundingBox}
           layerId={SEARCH_LAYER}
         />
         <Tooltip
