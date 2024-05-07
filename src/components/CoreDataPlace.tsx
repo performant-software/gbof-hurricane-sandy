@@ -1,6 +1,6 @@
 import { Peripleo, Controls, RuntimeConfig, useRuntimeConfig } from '@peripleo/peripleo';
 import { Map, Zoom } from '@peripleo/maplibre';
-import { PlaceMarkers, Peripleo as PeripleoUtils, I18nContext, LayerMenu, OverlayLayers } from '@performant-software/core-data';
+import { PlaceMarkers, Peripleo as PeripleoUtils, OverlayLayers } from '@performant-software/core-data';
 import { translations } from '../helpers/i18n';
 import { useEffect, useState } from 'react';
 import _ from 'underscore';
@@ -43,36 +43,34 @@ const CoreDataPlace = (props: CoreDataPlaceProps) => {
   }, []);
 
   return (
-      <I18nContext.Provider
-        value={{ translations: translations }}
-      >
-        <Peripleo>
-          <Map style={PeripleoUtils.toLayerStyle(baseLayer, baseLayer.name)}>
-            <Controls position="topright">
+      <Peripleo>
+        <Map style={PeripleoUtils.toLayerStyle(baseLayer, baseLayer.name)}>
+          <Controls position="topright">
+            <div onClick={(e: any) => {e.stopPropagation()}}>
               <Zoom />
-              {/* { baseLayers.length > 1 && (
-              <LayerMenu
-                baseLayer={baseLayer?.name}
-                baseLayers={baseLayers}
-                dataLayers={dataLayers}
-                onChangeBaseLayer={setBaseLayer}
-                onChangeOverlays={setOverlays}
-              />
-            )} */}
-            </Controls>
-            <OverlayLayers
-              overlays={overlays}
-              key={`overlay-${props.mapId}`}
+            </div>
+            {/* { baseLayers.length > 1 && (
+            <LayerMenu
+              baseLayer={baseLayer?.name}
+              baseLayers={baseLayers}
+              dataLayers={dataLayers}
+              onChangeBaseLayer={setBaseLayer}
+              onChangeOverlays={setOverlays}
             />
-            <PlaceMarkers
-              urls={props.placeURIs}
-              buffer={props.buffer}
-              animate={props.animate}
-              key={`markers-${props.mapId}`}
-            />
-          </Map>
-        </Peripleo>
-      </I18nContext.Provider>
+          )} */}
+          </Controls>
+          <OverlayLayers
+            overlays={overlays}
+            key={`overlay-${props.mapId}`}
+          />
+          <PlaceMarkers
+            urls={props.placeURIs}
+            buffer={props.buffer}
+            animate={props.animate}
+            key={`markers-${props.mapId}`}
+          />
+        </Map>
+      </Peripleo>
   )
 
 };

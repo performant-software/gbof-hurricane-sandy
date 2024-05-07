@@ -1,4 +1,4 @@
-import { I18nContext, Peripleo as PeripleoUtils } from '@performant-software/core-data';
+import { Peripleo as PeripleoUtils } from '@performant-software/core-data';
 import { Peripleo, RuntimeConfig } from '@peripleo/peripleo';
 import PlaceDetailSidebar from './PlaceDetailSidebar';
 import PlaceDetailMapView from './PlaceDetailMapView';
@@ -27,19 +27,15 @@ const PlaceDetailSearch = (props: PlaceDetailSearchProps) => {
       path='/config.json'
       preprocess={PeripleoUtils.normalize}
     >
-      <I18nContext.Provider
-        value={{ translations: translations }}
-      >
-        <Peripleo>
-            <PlaceDetailSidebar
-                placeId={placeId}
-                onClose={onClose}
-            />
-            <PlaceDetailMapView 
-                placeId={placeId}
-            />
-        </Peripleo>
-      </I18nContext.Provider>
+      <Peripleo>
+          <PlaceDetailSidebar
+              placeId={placeId}
+              onClose={onClose}
+          />
+          <PlaceDetailMapView 
+              placeId={placeId}
+          />
+      </Peripleo>
     </RuntimeConfig>
   );
 };
