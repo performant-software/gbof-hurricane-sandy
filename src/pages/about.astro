@@ -22,6 +22,10 @@ const projectResponse = await client.request({
 
 const { title, subheader, description } = projectResponse.data.about;
 
+const postsResponse = await client.queries.postConnection();
+
+const postsData = postsResponse.data.postConnection.edges?.map((item) => item?.node);
+
 ---
 
 <Layout title={title}>
@@ -42,9 +46,9 @@ const { title, subheader, description } = projectResponse.data.about;
     <div class="bg-neutral-dark h-[2px] w-full my-6" />
     <h2 class="text-5xl font-serif">Featured Work</h2>
     <div class="w-full grid grid-cols-3 gap-12">
-      <PostCard title="My Journey" imageUrl='/src/assets/paths/path_thumbnail.png' slug="/paths/My-journey" />
-      <PostCard title="My Journey" imageUrl='/src/assets/paths/path_thumbnail.png' slug="/paths/My-journey" />
-      <PostCard title="My Journey" imageUrl='/src/assets/paths/path_thumbnail.png' slug="/paths/My-journey" />
+      { postsData && postsData.map((post) => ( 
+        <PostCard title={post.title} imageUrl={post?.cardImage} slug={`/posts/${post._sys.filename}`} />
+    ))}
     </div>
   </Container>
   <Footer />
