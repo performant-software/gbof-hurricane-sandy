@@ -1,6 +1,14 @@
 /** @type {import('tailwindcss').Config} */
+import coreDataConfig from '@performant-software/core-data/tailwind.config';
+
 export default {
-	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+	presets: [
+		coreDataConfig
+	],
+	content: [
+		'./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}',
+		'./node_modules/@performant-software/core-data/**/*.{js,jsx,ts,tsx}'
+	],
 	theme: {
 		extend: {
 			screens: {
