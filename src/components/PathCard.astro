@@ -18,7 +18,7 @@ const { date, category, title, author, slug, imageUrl, blurb } = Astro.props;
 
 <article class="flex max-w-xl flex-row items-start justify-between bg-white rounded-2xl">
   <div class="relative h-full">
-    <Image src={imageUrl} alt="" class="aspect-[9/16] h-full bg-gray-100 object-cover sm:aspect-[1/2] lg:aspect-[2/3]" height={420} width={244}>
+    <img src={imageUrl} alt="" class="aspect-[9/16] h-full bg-gray-100 object-cover sm:aspect-[1/2] lg:aspect-[2/3]" height={420} width={244}>
     <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10"></div>
   </div>
   <div class="flex flex-col justify-between w-1/2 p-6">

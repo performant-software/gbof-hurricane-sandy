@@ -6,6 +6,8 @@ import client from '../../tina/__generated__/client';
 import { TinaMarkdown } from 'tinacms/dist/rich-text';
 import Footer from '../components/Footer.astro';
 import PostCard from '../components/PostCard.astro';
+import { Image } from 'astro:assets';
+import placeholderImg from '../assets/placeholder.png';
 
 const projectResponse = await client.request({
   query: `query getAbout($relativePath: String!) {
@@ -16,7 +18,7 @@ const projectResponse = await client.request({
       }
     }`,
   variables: { relativePath: 'about.mdx' },
-});
+}, {});
 
 const { title, subheader, description } = projectResponse.data.about;
 
@@ -34,7 +36,7 @@ const { title, subheader, description } = projectResponse.data.about;
         <TinaMarkdown content={description} />
       </article>
     </div>
-    <div class="w-full h-[400px] bg-neutral-dark/30" />
+    <Image src={placeholderImg} alt="" class="w-full" />
   </Container>
   <Container className="flex flex-col gap-12 pb-16">
     <div class="bg-neutral-dark h-[2px] w-full my-6" />
