@@ -1,22 +1,25 @@
 import {
-  PersistentSearchStateContextProvider,
   FacetStateContextProvider,
+  PersistentSearchStateContextProvider,
   Typesense as TypesenseUtils
 } from '@performant-software/core-data';
 import { useRuntimeConfig } from '@peripleo/peripleo';
-import { type ReactNode, useMemo } from 'react';
+import { useMemo, type ReactNode } from 'react';
 import {
   InstantSearch,
   useGeoSearch,
   useInfiniteHits,
-  useSearchBox,
-  useRefinementList
+  useRefinementList,
+  useSearchBox
 } from 'react-instantsearch';
 
 const SearchProvider = (props: { children: ReactNode }) => {
+  const config = useRuntimeConfig();
   const geoSearch = useGeoSearch();
   const infiniteHits = useInfiniteHits();
   const searchBox = useSearchBox();
+
+  const { typesense }: any = config;
 
   return (
     <PersistentSearchStateContextProvider
@@ -25,6 +28,10 @@ const SearchProvider = (props: { children: ReactNode }) => {
       searchBox={searchBox}
     >
       <FacetStateContextProvider
+        apiKey={typesense.api_key}
+        host={typesense.host}
+        indexName={typesense.index_name}
+        protocol={typesense.protocol}
         useRefinementList={useRefinementList}
       >
         { props.children }
@@ -35,7 +42,7 @@ const SearchProvider = (props: { children: ReactNode }) => {
 
 const TypesenseSearch = (props: { children: ReactNode }) => {
   const config = useRuntimeConfig<any>();
-
+  
   const adapter = useMemo(() => TypesenseUtils.createTypesenseAdapter(config.typesense), []);
   const routing = useMemo(() => TypesenseUtils.createRouting(config.typesense), []);
 
