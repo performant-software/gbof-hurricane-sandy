@@ -21,7 +21,7 @@ const SearchFilters = () => {
   return (
     <>
       <div
-        className='relative p-2 rounded-full bg-gray-1000 text-gray-500 h-full aspect-square flex justify-center items-center hover:bg-gray-200 hover:scale-105 cursor-pointer'
+        className='relative p-2 rounded-full bg-gray-1000 text-white h-full aspect-square flex justify-center items-center hover:bg-gray-200 hover:scale-105 cursor-pointer'
         onClick={() => setOpen((prevOpen) => !prevOpen)}
       >
         <Settings2 />

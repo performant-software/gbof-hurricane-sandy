@@ -19,7 +19,10 @@ export default {
 			},
 			colors: {
 				'neutral-dark': '#111928',
-				'neutral-light': '#F5F5F5'
+				'neutral-light': '#F5F5F5',
+				gray: {
+					1000: '#505A6A'
+				},
 			}
 		},
 	},
