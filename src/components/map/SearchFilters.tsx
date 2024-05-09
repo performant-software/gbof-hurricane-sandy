@@ -86,6 +86,8 @@ const SearchFilters = () => {
                     renderList={(attribute: string) => (
                     <RefinementList
                         attribute={attribute}
+                        showMore
+                        showMoreLimit={100}
                     />
                     )}
                     resolveLabel={(uuid: string) => (uuid)}
