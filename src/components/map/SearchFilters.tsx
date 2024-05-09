@@ -1,4 +1,4 @@
-import { FacetListsGrouped, FacetStateContext, useGeoSearch } from '@performant-software/core-data';
+import { FacetListsGrouped, FacetStateContext, useGeoSearchToggle } from '@performant-software/core-data';
 // import * as Dialog from '@radix-ui/react-dialog';
 import * as Switch from '@radix-ui/react-switch';
 import { Settings2, X } from 'lucide-react';
@@ -13,9 +13,8 @@ interface FacetStateContextType {
 
 const SearchFilters = () => {
   const { attributes } = useContext<FacetStateContextType>(FacetStateContext);
-  const { isRefinedWithMap } = useGeoSearch();
 
-  const [filterByMapBounds, setFilterByMapBounds] = useState(isRefinedWithMap());
+  const { filterByMapBounds, setFilterByMapBounds } = useGeoSearchToggle();
   const [open, setOpen] = useState<boolean>(false);
 
   return (
