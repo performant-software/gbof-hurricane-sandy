@@ -1,5 +1,17 @@
-import { defineConfig } from "tinacms";
 import TinaPlacePicker from "../src/components/TinaPlacePicker";
+import { defineConfig, type TinaField, type Template } from "tinacms";
+import config from "../src/i18n/config";
+import { t } from "../src/i18n/utils";
+
+const uiFields: TinaField<false>[] = Object.keys(config.ui).map((key: string) => ({
+  name: t(key),
+  label: config.ui[key as keyof typeof config.ui].tinaLabel,
+  type: "string",
+  ui: {
+    //@ts-ignore
+    component: config.ui[key as keyof typeof config.ui]?.textArea ? 'textarea' : 'text'
+  }
+}));
 
 // Your hosting provider likely exposes this as an environment variable
 const branch =
@@ -241,6 +253,13 @@ export default defineConfig({
             ]
           }
         ]
+      },
+      {
+        name: "ui",
+        format: "json",
+        label: "UI Labels",
+        path: "content/ui",
+        fields: uiFields
       }
     ],
   },
