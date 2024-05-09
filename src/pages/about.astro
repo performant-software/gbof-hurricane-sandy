@@ -42,7 +42,7 @@ const postsData = postsResponse.data.postConnection.edges?.map((item) => item?.n
     </div>
     <Image src={placeholderImg} alt="" class="w-full" />
   </Container>
-  <Container className="flex flex-col gap-12 pb-16">
+  <!-- <Container className="flex flex-col gap-12 pb-16">
     <div class="bg-neutral-dark h-[2px] w-full my-6" />
     <h2 class="text-5xl font-serif">Featured Work</h2>
     <div class="w-full grid grid-cols-3 gap-12">
@@ -50,6 +50,6 @@ const postsData = postsResponse.data.postConnection.edges?.map((item) => item?.n
         <PostCard title={post.title} imageUrl={post?.cardImage} slug={`/posts/${post._sys.filename}`} />
     ))}
     </div>
-  </Container>
+  </Container> -->
   <Footer />
 </Layout>
