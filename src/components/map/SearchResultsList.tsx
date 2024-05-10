@@ -5,6 +5,9 @@ import { useCallback, useMemo } from 'react';
 import { Highlight } from 'react-instantsearch';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList } from 'react-window';
+import config from '../../i18n/config';
+import * as m from '../../paraglide/messages';
+import { t } from '../../i18n/utils';
 
 interface HitComponentProps {
   hit: any;
@@ -39,19 +42,26 @@ const HitComponent = (props: HitComponentProps) => {
       className={className}
     >
       <button
-        className='py-2 px-3 flex-grow text-left flex items-center rounded-none px-5'
+        className='flex-grow text-left flex flex-col justify-center rounded-none px-5'
         onClick={props.onClick}
       >
-        <div>
-          <Building
-            strokeWidth={1}
+        <div className="flex">
+          <div>
+            <Building
+              strokeWidth={1}
+            />
+          </div>
+          <Highlight
+            attribute={'name'}
+            className='mx-4'
+            hit={hit}
           />
         </div>
-        <Highlight
-          attribute='name'
-          className='mx-4'
-          hit={hit}
-        />
+        { hit[config.featuredModel.uuid] && hit[config.featuredModel.uuid].length > 0 && (
+          <div className="flex">
+            { `${m[t(config.featuredModel.uuid)]()}(s): ${hit[config.featuredModel.uuid][0].name.slice(0,40)}${hit[config.featuredModel.uuid][0].name.length > 40 ? '...' : ''}${hit[config.featuredModel.uuid].length > 1 ? ` and ${hit[config.featuredModel.uuid].length - 1} more` : ''}` }
+          </div>
+        )}
       </button>
     </div>
   );

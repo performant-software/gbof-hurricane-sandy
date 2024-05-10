@@ -32,6 +32,10 @@ const config = {
             tinaLabel: "Root"
         },
         ...userDefinedFields
+    },
+    featuredModel: {
+        uuid: '83f862f6-f231-45f7-9bc1-66ef8c2eeaf3',
+        labelField: '83f862f6-f231-45f7-9bc1-66ef8c2eeaf3.name.value'
     }
 };
 
