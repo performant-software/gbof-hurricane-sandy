@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const getFields = async () => {
-    const coreDataPayload = await fetch('https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/projects/24/descriptors').then((res) => {
+    const coreDataPayload = await fetch('https://core-data-cloud-production-955ccda75add.herokuapp.com/core_data/public/projects/3/descriptors').then((res) => {
         return res.json();
     });
     let coreDataFields = '';

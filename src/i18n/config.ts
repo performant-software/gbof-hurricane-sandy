@@ -18,9 +18,6 @@ const config = {
         about: {
             tinaLabel: "About"
         },
-        paths: {
-            tinaLabel: "Paths"
-        },
         posts: {
             tinaLabel: "Posts"
         },
