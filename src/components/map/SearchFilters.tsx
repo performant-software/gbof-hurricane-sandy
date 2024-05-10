@@ -6,6 +6,8 @@ import React, { useContext, useState, Fragment } from 'react';
 import { RefinementList } from 'react-instantsearch';
 import '../../styles/SearchFilters.css';
 import { Dialog, Transition } from '@headlessui/react'
+import * as m from '../../paraglide/messages';
+import { t } from '../../i18n/utils';
 
 interface FacetStateContextType {
   attributes: string[];
@@ -89,7 +91,7 @@ const SearchFilters = () => {
                         showMoreLimit={100}
                     />
                     )}
-                    resolveLabel={(uuid: string) => (uuid)}
+                    resolveLabel={(uuid: string) => { return m[t(uuid)] ? m[t(uuid)]() : uuid; }}
                 />
 
                   <div className="mt-4">

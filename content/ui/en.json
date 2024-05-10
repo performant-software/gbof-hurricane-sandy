@@ -5,6 +5,7 @@
   "t_paths": "Paths",
   "t_posts": "Posts",
   "t_title": "Name",
+  "t_root": "Places",
   "t_b1e5fbf908034e398810d252eeb1b714": "Places",
   "t_988645ac54c54de7aa827c1f8489036c": "Address",
   "t_e86ea9bfb8e9407eb1f6dadf9318bc5a": "People",
@@ -21,7 +22,7 @@
   "t_44c190bfa51a451db5f6f72710916816": "Editor",
   "t_253bfff8ccb3467cb7249082c1130ad4": "Publisher",
   "t_a15ae785173b4c95aeb5bf9aeb8b4252": "Contributor",
-  "t_83f862f6f23145f79bc166ef8c2eeaf3": "Location",
+  "t_83f862f6f23145f79bc166ef8c2eeaf3": "Organization",
   "t_db766f684e574016b3a37ba76ea1b215": "Landscapes",
   "t_c969f66cf9b04305aeda0e2768397f0a": "Author",
   "t_e0f9145da27445149ffd49ac1945fe4b": "Event Locations"

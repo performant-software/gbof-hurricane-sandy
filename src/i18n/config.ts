@@ -28,6 +28,9 @@ const config = {
         title: {
             tinaLabel: "Name"
         },
+        root: {
+            tinaLabel: "Root"
+        },
         ...userDefinedFields
     }
 };
