@@ -23,7 +23,7 @@ const TinaPlacePicker = wrapFieldsWithMeta((props: CustomTinaFieldProps) => {
   }
 
   const fetchPlace = async (placeUuid: string) => {
-    const placeData = await fetch(`https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/places/${placeUuid}?project_ids=24`).then(response => response.json());
+    const placeData = await fetch(`https://core-data-cloud-production-955ccda75add.herokuapp.com/core_data/public/places/${placeUuid}?project_ids=3`).then(response => response.json());
     setSelectedPlace(placeData);
   };
 
@@ -64,10 +64,10 @@ const TinaPlacePicker = wrapFieldsWithMeta((props: CustomTinaFieldProps) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetch('https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/places?project_ids=24').then(response => response.json())
+      const data = await fetch('https://core-data-cloud-production-955ccda75add.herokuapp.com/core_data/public/places?project_ids=3').then(response => response.json())
         .then(async response => {
           const results = response.metadata.count;
-          const fullData = await fetch(`https://core-data-cloud-staging-2c51db0617a5.herokuapp.com/core_data/public/places?project_ids=24&per_page=${results}`).then(response => response.json()).then(response => JSON.stringify(response));
+          const fullData = await fetch(`https://core-data-cloud-production-955ccda75add.herokuapp.com/core_data/public/places?project_ids=3&per_page=${results}`).then(response => response.json()).then(response => JSON.stringify(response));
           return fullData});
       setPlaces(JSON.parse(data));
     }

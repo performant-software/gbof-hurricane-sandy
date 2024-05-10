@@ -61,19 +61,19 @@
       }
     ],
     "typesense": {
-      "host": "i74olkjcuy69ze2vp-1.a1.typesense.net",
+      "host": "mk0zu5rvf46oa2h7p-1.a1.typesense.net",
       "port": 443,
       "protocol": "https",
-      "api_key": "NgeY4qBzdlQXvNYRYWt5xMDXurbUQhPZ",
-      "index_name": "ground_beneath_our_feet_places",
+      "api_key": "9w4KmmAR9j7330FffHh1PtdWvok48Hln",
+      "index_name": "hurricane_sandy",
       "query_by": "name",
       "facets": {
       }
     },
     "core_data": {
-      "url": "https://core-data-cloud-staging-2c51db0617a5.herokuapp.com",
+      "url": "https://core-data-cloud-production-955ccda75add.herokuapp.com",
       "project_ids": [
-        24
+        3
       ]
     }
   }
