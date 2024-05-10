@@ -21,7 +21,7 @@ const projectResponse = await client.request({
 
 const { title } = projectResponse.data.about;
 
-const sections = ["Map", "Posts", "About"];
+const sections = ["Map", "Posts"];
 ---
 
 <div class={`hidden md:inline-block w-full max-w-screen-3xl 3xl:mx-auto bg-white ${ !map && 'shadow-md' } z-10`}>
