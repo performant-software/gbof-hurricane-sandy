@@ -2,6 +2,18 @@
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import Container from "./Container.astro";
 import { Image } from "astro:assets";
+import client from "../../tina/__generated__/client";
+
+const projectResponse = await client.request({
+    query: `query getAbout($relativePath: String!) {
+      about(relativePath: $relativePath) {
+        title
+      }
+    }`,
+  variables: { relativePath: 'about.mdx' },
+}, {});
+
+const { title } = projectResponse.data.about;
 
 ---
 
@@ -9,7 +21,9 @@ import { Image } from "astro:assets";
     <Container className="flex flex-col gap-8 py-12 items-center">
         <div class="flex flex-col md:flex-row gap-6 align-middle justify-center items-center">
             <div class="w-20 h-20 rounded-full bg-blue-600" />
-            <p class="text-5xl font-serif self-center">Name</p>
+            <p class="text-5xl font-serif self-center">
+                { title }
+            </p>
         </div>
         <p class="text-center">
             Lorem ipsum dolor sit amet consectetur. Eros quis faucibus magna vestibulum massa ac dolor.

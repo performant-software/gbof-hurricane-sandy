@@ -17,7 +17,7 @@ const projectResponse = await client.request({
       }
     }`,
   variables: { relativePath: 'about.mdx' },
-});
+}, {});
 
 const { title } = projectResponse.data.about;
 
