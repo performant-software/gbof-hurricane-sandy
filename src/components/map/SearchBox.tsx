@@ -1,14 +1,15 @@
 import { useSearchBox } from '@performant-software/core-data';
 import { Search, X } from 'lucide-react';
 import { type FormEvent, useCallback, useRef } from 'react';
-// import resolveConfig from 'tailwindcss/resolveConfig';
-// import tailwindConfig from '../../../tailwind.config.mjs';
+import resolveConfig from 'tailwindcss/resolveConfig';
+import tailwindConfig from '../../../tailwind.config.mjs';
 
 const SearchBox = () => {
   const { query, refine } = useSearchBox();
 
   // const { theme } = resolveConfig(tailwindConfig);
-  // const color = theme.colors.gray['900'];
+  // const color = theme.colors.gray['1000'];
+  const color = '#505A6A';
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -39,10 +40,10 @@ const SearchBox = () => {
       >
         <Search
           className='w-4'
-          color='white'
+          color={color}
         />
         <input
-          className='text-sm bg-transparent flex-grow mx-2 text-gray-1000 outline-none'
+          className='text-sm bg-transparent flex-grow mx-2 text-gray-1000 outline-none border-0 focus:ring-0'
           onChange={(e) => refine(e.target.value)}
           placeholder='Search'
           ref={inputRef}
@@ -51,7 +52,7 @@ const SearchBox = () => {
         />
         <X
           className='w-4 cursor-pointer'
-          color='white'
+          color={color}
           onClick={onClear}
         />
       </div>

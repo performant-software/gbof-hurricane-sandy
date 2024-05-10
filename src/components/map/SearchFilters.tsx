@@ -1,11 +1,13 @@
-import { FacetListsGrouped, FacetStateContext, useGeoSearch } from '@performant-software/core-data';
+import { FacetListsGrouped, FacetStateContext, useGeoSearchToggle, useCachedHits } from '@performant-software/core-data';
 // import * as Dialog from '@radix-ui/react-dialog';
 import * as Switch from '@radix-ui/react-switch';
 import { Settings2, X } from 'lucide-react';
-import React, { useContext, useState, Fragment } from 'react';
+import React, { useContext, useState, Fragment, useEffect } from 'react';
 import { RefinementList } from 'react-instantsearch';
 import '../../styles/SearchFilters.css';
 import { Dialog, Transition } from '@headlessui/react'
+import * as m from '../../paraglide/messages';
+import { t } from '../../i18n/utils';
 
 interface FacetStateContextType {
   attributes: string[];
@@ -13,15 +15,18 @@ interface FacetStateContextType {
 
 const SearchFilters = () => {
   const { attributes } = useContext<FacetStateContextType>(FacetStateContext);
-  const { isRefinedWithMap } = useGeoSearch();
 
-  const [filterByMapBounds, setFilterByMapBounds] = useState(isRefinedWithMap());
+  const { filterByMapBounds, setFilterByMapBounds } = useGeoSearchToggle();
   const [open, setOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    setFilterByMapBounds(true);
+  }, []);
 
   return (
     <>
       <div
-        className='relative p-2 rounded-full bg-gray-1000 text-gray-500 h-full aspect-square flex justify-center items-center hover:bg-gray-200 hover:scale-105 cursor-pointer'
+        className='relative p-2 rounded-full bg-gray-1000 text-white h-full aspect-square flex justify-center items-center hover:bg-gray-200 hover:scale-105 cursor-pointer'
         onClick={() => setOpen((prevOpen) => !prevOpen)}
       >
         <Settings2 />
@@ -61,7 +66,7 @@ const SearchFilters = () => {
                     />
                         Filters
                   </Dialog.Title>
-                  <div
+                  {/* <div
                     className='flex items-center text-sm mt-5'
                 >
                     <Switch.Root
@@ -80,15 +85,17 @@ const SearchFilters = () => {
                     >
                     Filter by map bounds
                     </label>
-                </div>
+                </div> */}
                 <FacetListsGrouped
                     attributes={attributes}
                     renderList={(attribute: string) => (
                     <RefinementList
                         attribute={attribute}
+                        showMore
+                        showMoreLimit={100}
                     />
                     )}
-                    resolveLabel={(uuid: string) => (uuid)}
+                    resolveLabel={(uuid: string) => { return m[t(uuid)] ? m[t(uuid)]() : uuid; }}
                 />
 
                   <div className="mt-4">

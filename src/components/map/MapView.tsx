@@ -35,12 +35,13 @@ import { useStats } from 'react-instantsearch';
 
     const { nbHits: count } = useStats();
 
-      /**
+    
+    /**
      * If we're on the place detail page or refining results by the map view port, we'll suppress the auto-bounding box
      * on the SearchResultsLayer component.
-     */
-    const fitBoundingBox = useMemo(() => !isRefinedWithMap() && route === '/', [route, isRefinedWithMap()]);
-
+    */
+   const fitBoundingBox = useMemo(() => !isRefinedWithMap() && route === '/', [route, isRefinedWithMap()]);
+   
     /**
      * Navigates to the selected marker.
      */
@@ -82,8 +83,7 @@ import { useStats } from 'react-instantsearch';
               left: 380,
               right: 120
             },
-            maxZoom: 14,
-            zoom: 14
+            maxZoom: 14
           }}
           fitBoundingBox={fitBoundingBox}
           layerId={SEARCH_LAYER}

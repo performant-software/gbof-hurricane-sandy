@@ -3,12 +3,14 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "tinacms dev -c \"astro dev\"",
+    "dev": "node build.js && paraglide-js compile --project ./project.inlang && tinacms dev -c \"astro dev\"",
     "start": "astro dev",
-    "build": "tinacms build && astro build",
-    "preview": "astro preview"
+    "build": "node build.js && paraglide-js compile --project ./project.inlang && tinacms build && astro build",
+    "preview": "astro preview",
+    "postinstall": "paraglide-js compile --project ./project.inlang --outdir ./src/paraglide"
   },
   "devDependencies": {
+    "@inlang/paraglide-js": "1.8.0",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
     "@tinacms/cli": "^1.5.39",
@@ -25,6 +27,7 @@
     "@astrojs/tailwind": "^5.1.0",
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
+    "@inlang/paraglide-astro": "^0.1.11",
     "@nanostores/react": "^0.7.1",
     "@performant-software/core-data": "2.1.1",
     "@performant-software/geospatial": "2.1.1",
