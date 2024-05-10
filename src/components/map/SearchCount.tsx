@@ -1,4 +1,4 @@
-import { useSearchBox } from '@performant-software/core-data';
+import { useSearchBox, useCachedHits } from '@performant-software/core-data';
 import clsx from 'clsx';
 import React, { useMemo } from 'react';
 import { useStats } from 'react-instantsearch';
@@ -9,7 +9,8 @@ interface Props {
 }
 
 const SearchCount = (props: Props) => {
-  const { nbHits: count } = useStats();
+  // const { nbHits: count } = useStats();
+  const count = useCachedHits() ? useCachedHits().length : 0;
   const { query } = useSearchBox();
 
   const content = useMemo(() => (

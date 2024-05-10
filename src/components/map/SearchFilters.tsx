@@ -1,8 +1,8 @@
-import { FacetListsGrouped, FacetStateContext, useGeoSearchToggle } from '@performant-software/core-data';
+import { FacetListsGrouped, FacetStateContext, useGeoSearchToggle, useCachedHits } from '@performant-software/core-data';
 // import * as Dialog from '@radix-ui/react-dialog';
 import * as Switch from '@radix-ui/react-switch';
 import { Settings2, X } from 'lucide-react';
-import React, { useContext, useState, Fragment } from 'react';
+import React, { useContext, useState, Fragment, useEffect } from 'react';
 import { RefinementList } from 'react-instantsearch';
 import '../../styles/SearchFilters.css';
 import { Dialog, Transition } from '@headlessui/react'
@@ -18,6 +18,10 @@ const SearchFilters = () => {
 
   const { filterByMapBounds, setFilterByMapBounds } = useGeoSearchToggle();
   const [open, setOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    setFilterByMapBounds(true);
+  }, []);
 
   return (
     <>
@@ -62,7 +66,7 @@ const SearchFilters = () => {
                     />
                         Filters
                   </Dialog.Title>
-                  <div
+                  {/* <div
                     className='flex items-center text-sm mt-5'
                 >
                     <Switch.Root
@@ -81,7 +85,7 @@ const SearchFilters = () => {
                     >
                     Filter by map bounds
                     </label>
-                </div>
+                </div> */}
                 <FacetListsGrouped
                     attributes={attributes}
                     renderList={(attribute: string) => (
