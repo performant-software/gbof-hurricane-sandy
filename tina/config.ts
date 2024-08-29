@@ -109,6 +109,36 @@ export default defineConfig({
             isBody: true,
             templates: [
               {
+                name: "iframe",
+                label: "AV Embed",
+                fields: [
+                  {
+                    name: "src",
+                    label: "Embed Link",
+                    type: "string",
+                    required: true
+                  },
+                  {
+                    name: "width",
+                    label: "Width (pixels)",
+                    type: "number",
+                    ui: {
+                      parse: (val?: number)=>val || 0,
+                      format: (val?: number)=> val === 0 ? null : val
+                    }
+                  },
+                  {
+                    name: "height",
+                    label: "Height (pixels)",
+                    type: "number",
+                    ui: {
+                      parse: (val?: number)=>val || 0,
+                      format: (val?: number)=> val === 0 ? null : val
+                    }
+                  }
+                ]
+              },
+              {
                 name: "place",
                 label: "Place",
                 fields: [
