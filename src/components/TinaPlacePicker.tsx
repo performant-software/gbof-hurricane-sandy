@@ -23,7 +23,7 @@ const TinaPlacePicker = wrapFieldsWithMeta((props: CustomTinaFieldProps) => {
   }
 
   const fetchPlace = async (placeUuid: string) => {
-    const placeData = await fetch(`https://app.coredata.cloud/core_data/public/v1/places/${placeUuid}?project_ids[]=3&view=all`).then(response => response.json());
+    const placeData = await fetch(`https://app.coredata.cloud/core_data/public/v1/places/${placeUuid}?project_ids[]=3`).then(response => response.json());
     setSelectedPlace(placeData.place);
   };
 
@@ -64,11 +64,11 @@ const TinaPlacePicker = wrapFieldsWithMeta((props: CustomTinaFieldProps) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetch('https://app.coredata.cloud/core_data/public/v1/places?project_ids[]=3&view=all').then(response => response.json())
+      const data = await fetch('https://app.coredata.cloud/core_data/public/v1/places?project_ids[]=3').then(response => response.json())
         .then(async response => {
           console.log('hi', response);
           const results = response.list.count;
-          const fullData = await fetch(`https://app.coredata.cloud/core_data/public/v1/places?project_ids[]=3&per_page=${results}&view=all`).then(response => response.json()).then(response => JSON.stringify(response));
+          const fullData = await fetch(`https://app.coredata.cloud/core_data/public/v1/places?project_ids[]=3&per_page=${results}`).then(response => response.json()).then(response => JSON.stringify(response));
           return fullData});
       setPlaces(JSON.parse(data));
     }
