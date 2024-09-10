@@ -64,7 +64,7 @@
       "host": "mk0zu5rvf46oa2h7p-1.a1.typesense.net",
       "port": 443,
       "protocol": "https",
-      "api_key": "9w4KmmAR9j7330FffHh1PtdWvok48Hln",
+      "api_key": "u5wSsC0pezowgxnz8LN22Ux1Z9lfGqEw",
       "index_name": "hurricane_sandy",
       "query_by": "name",
       "facets": {
