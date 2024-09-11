@@ -2,14 +2,14 @@ import {
   CoreData as CoreDataUtils,
   PlaceDetails,
   PlaceLayersSelector,
-  PlacesService,
   RelatedItem,
   RelatedItemsList,
   RelatedMedia,
   RelatedOrganizations,
   RelatedPeople,
   RelatedPlaces,
-  RelatedTaxonomies
+  RelatedTaxonomies,
+  usePlacesService
 } from '@performant-software/core-data';
 import { LocationMarkers } from '@performant-software/geospatial';
 import { type AnnotationPage, useCurrentRoute, useNavigate } from '@peripleo/peripleo';
@@ -42,6 +42,8 @@ const Place = () => {
   const route = useCurrentRoute();
   const navigate = useNavigate();
 
+  const PlacesService = usePlacesService();
+
   const bboxOptions = {
     padding: {
       top: 100,
@@ -69,9 +71,9 @@ const Place = () => {
   /**
    * Sets the count of records returned from the passed response.
    */
-  const setRelatedCount = useCallback((response: AnnotationPage<any>, callback: CallbackFunction) => {
-    const { total } = response.partOf;
-    callback(total);
+  const setRelatedCount = useCallback((response: any, callback: CallbackFunction) => {
+    const { count } = response.list || {};
+    callback(count);
 
     return response;
   }, []);
@@ -80,7 +82,7 @@ const Place = () => {
    * Sets the count of media records returned from the passed response.
    */
   const setRelatedMediaCount = useCallback((response: AnnotationPage<any>) => {
-    const count = _.reduce(_.pluck(response.items, 'item_count'), (a, b) => (a +b)) || 0;
+    const count = _.reduce(_.pluck(response.items, 'item_count'), (memo, num) => (memo + num)) || 0;
     setMediaCount(count);
 
     return response;
@@ -105,7 +107,7 @@ const Place = () => {
           id={uuid}
           onLoad={setPlace}
         />
-        { place && (
+        { !_.isEmpty(place?.place_layers) && (
           <PlaceLayersSelector
             className='place-layers-selector'
             label={'Map Layers'}
@@ -121,9 +123,9 @@ const Place = () => {
           >
             <RelatedMedia
               emptyMessage={'None'}
-              onLoad={(baseUrl: string, projectIds: Array<number>) => (
+              onLoad={() => (
                 PlacesService
-                  .fetchRelatedManifests(baseUrl, uuid, projectIds)
+                  .fetchRelatedManifests(uuid)
                   .then(setRelatedMediaCount)
                   .finally(() => setMediaLoading(false))
               )}
@@ -137,9 +139,9 @@ const Place = () => {
           >
             <RelatedOrganizations
               emptyMessage={'None'}
-              onLoad={(baseUrl: string, projectIds: Array<number>) => (
+              onLoad={() => (
                 PlacesService
-                  .fetchRelatedOrganizations(baseUrl, uuid, projectIds)
+                  .fetchRelatedOrganizations(uuid)
                   .then((resp: AnnotationPage<any>) => setRelatedCount(resp, setOrganizationsCount))
                   .finally(() => setOrganizationsLoading(false))
               )}
@@ -153,9 +155,9 @@ const Place = () => {
           >
             <RelatedPeople
               emptyMessage={'None'}
-              onLoad={(baseUrl: string, projectIds: Array<number>) => (
+              onLoad={() => (
                 PlacesService
-                  .fetchRelatedPeople(baseUrl, uuid, projectIds)
+                  .fetchRelatedPeople(uuid)
                   .then((resp: AnnotationPage<any>) => setRelatedCount(resp, setPeopleCount))
                   .finally(() => setPeopleLoading(false))
               )}
@@ -169,9 +171,9 @@ const Place = () => {
           >
             <RelatedPlaces
               emptyMessage={'None'}
-              onLoad={(baseUrl: string, projectIds: Array<number>) => (
+              onLoad={() => (
                 PlacesService
-                  .fetchRelatedPlaces(baseUrl, uuid, projectIds)
+                  .fetchRelatedPlaces(uuid)
                   .then((resp: AnnotationPage<any>) => setRelatedCount(resp, setPlacesCount))
                   .finally(() => setPlacesLoading(false))
               )}
@@ -185,9 +187,9 @@ const Place = () => {
           >
             <RelatedTaxonomies
               emptyMessage={'None'}
-              onLoad={(baseUrl: string, projectIds: Array<number>) => (
+              onLoad={() => (
                 PlacesService
-                  .fetchRelatedTaxonomies(baseUrl, uuid, projectIds)
+                  .fetchRelatedTaxonomies(uuid)
                   .then((resp: AnnotationPage<any>) => setRelatedCount(resp, setTaxonomiesCount))
                   .finally(() => setTaxonomiesLoading(false))
               )}
