@@ -71,7 +71,7 @@
       }
     },
     "core_data": {
-      "url": "https://core-data-cloud-production-955ccda75add.herokuapp.com",
+      "url": "https://app.coredata.cloud",
       "project_ids": [
         3
       ]
