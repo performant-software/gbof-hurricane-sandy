@@ -1,45 +1,61 @@
 ---
-import client from "../../tina/__generated__/client";
+import { client } from "../../tina/__generated__/databaseClient";
 import Container from "./Container.astro";
 import MobileHeader from "./MobileHeader";
-import * as m from '../paraglide/messages';
+import * as m from "../paraglide/messages";
 import { t } from "../i18n/utils";
 
 export interface Props {
-    tab?: string;
-    map?: boolean;
+  tab?: string;
+  map?: boolean;
 }
 
 const { tab, map = false } = Astro.props;
 
-const projectResponse = await client.request({
+const projectResponse = await client.request(
+  {
     query: `query getAbout($relativePath: String!) {
       about(relativePath: $relativePath) {
         title
       }
     }`,
-  variables: { relativePath: 'about.mdx' },
-}, {});
+    variables: { relativePath: "about.mdx" },
+  },
+  {}
+);
 
 const { title } = projectResponse.data.about;
 
 const sections = ["Map", "Posts"];
 ---
 
-<div class={`hidden md:inline-block w-full max-w-screen-3xl 3xl:mx-auto bg-white ${ !map && 'shadow-md' } z-10`}>
-    <Container className="flex flex-row justify-between py-8 align-middle">
-        <a class="flex flex-row align-middle gap-6" href="/">
-            <!-- <Image src={logo} alt="EditionCrafter" /> -->
-            <div class="inline-block w-6 h-6 bg-blue-600 rounded-full" />
-            <p class="text-2xl font-serif self-center">{title}</p>
-        </a>
-        <div class="flex flex-row xl:gap-x-16 lg:gap-x-12 gap-x-4 align-baseline justify-around">
-            { sections.map((sect) => (
-                <a href={`/${sect.toLowerCase()}`} class="flex flex-col p-y-4 justify-center">
-                    <div class={`flex ${ sect == tab && 'font-bold border-b-2 border-b-orange-primary'}`}>{m[t(sect.toLowerCase())]()}</div>
-                </a>
-            ))}
-        </div>
-    </Container>
+<div
+  class={`hidden md:inline-block w-full max-w-screen-3xl 3xl:mx-auto bg-white ${!map && "shadow-md"} z-10`}
+>
+  <Container className="flex flex-row justify-between py-8 align-middle">
+    <a class="flex flex-row align-middle gap-6" href="/">
+      <!-- <Image src={logo} alt="EditionCrafter" /> -->
+      <div class="inline-block w-6 h-6 bg-blue-600 rounded-full"></div>
+      <p class="text-2xl font-serif self-center">{title}</p>
+    </a>
+    <div
+      class="flex flex-row xl:gap-x-16 lg:gap-x-12 gap-x-4 align-baseline justify-around"
+    >
+      {
+        sections.map((sect) => (
+          <a
+            href={`/${sect.toLowerCase()}`}
+            class="flex flex-col p-y-4 justify-center"
+          >
+            <div
+              class={`flex ${sect == tab && "font-bold border-b-2 border-b-orange-primary"}`}
+            >
+              {m[t(sect.toLowerCase())]()}
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </Container>
 </div>
 <MobileHeader sections={sections} client:load />

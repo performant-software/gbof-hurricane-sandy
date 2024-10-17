@@ -1,18 +1,18 @@
-# example netlify.toml
-[build]
-  command = "npm run build"
-  functions = "netlify/functions"
-  publish = "dist"
+[functions]
+  node_bundler = "esbuild"
 
-# [[plugins]]
-#   package = "netlify-plugin-cypress"
+[[redirects]]
+  from = "/api/tina/*"
+  to = "/.netlify/functions/tina"
+  status = 200
+  force = true
 
-#   [plugins.inputs.postBuild]
-#     enable = true
+[[redirects]]
+  from = "/api/cloudinary/*"
+  to = "/.netlify/functions/tina"
+  status = 200
+  force = true
 
-#   [plugin.inputs]
-#     enable = false
-
-[images]
-
-  remote_images = ["https://assets.tina.io"]
+[dev]
+  command = "npm run dev"
+  targetPort = 4321
